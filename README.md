@@ -1,5 +1,5 @@
 # Du-Bois-DVS-challenge
-![](2024/_artifacts/2024-challenge.png)<br>
+![](_artifacts/gallery.jpg)<br>
 <small>(Photo Above) W.E.B. Du Bois at the 1900 Paris Exposition. (Chronicling America: Historic American Newspapers/Library of Congress)</small>
 <br>
 <br>
