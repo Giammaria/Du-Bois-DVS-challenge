@@ -12,4 +12,4 @@ Tool used: [Vega](https://vega.github.io/vega/docs/)
 
 - [See the interactive version in the Vega Editor](https://vega.github.io/editor/#/gist/b0155f3b8ed0f4d21a502bc19e424d67/spec.json/view)
 - [See the original.](2024/challenge-01/_artifacts/original-plate-06.jpg)
-- [See tne Vega specification.](2024/challenge-01/visual.vg.json)
+- [See the Vega specification.](2024/challenge-01/visual.vg.json)
