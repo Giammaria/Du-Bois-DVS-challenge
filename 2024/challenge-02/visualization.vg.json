@@ -1,1092 +1,1113 @@
 {
-    "$schema": "https://vega.github.io/schema/vega/v5.json",
-    "description": "Entry for challenge 02 in the 2024 DVS Du Bois Visualization Contest.",
-    "usermeta": {
-      "developedBy": "Madison Giammaria",
-      "LinkedIn": "https://www.linkedin.com/in/madison-giammaria-58463b33",
-      "email": "giammariam@gmail.com"
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "Entry for challenge 02 in the 2024 DVS Du Bois Visualization Contest.",
+  "usermeta": {
+    "developedBy": "Madison Giammaria",
+    "LinkedIn": "https://www.linkedin.com/in/madison-giammaria-58463b33",
+    "email": "giammariam@gmail.com"
+  },
+  "title": {
+    "text": "SLAVES AND FREE NEGROES.",
+    "orient": "top",
+    "anchor": "middle",
+    "font": {"signal": "font"},
+    "fontSize": 14,
+    "offset": -61,
+    "fontWeight": "800",
+    "color": "#666",
+    "zindex": 99
+  },
+  "width": 400,
+  "padding": 5,
+  "signals": [
+    {
+      "name": "duration",
+      "description": "The duration for the zoom transitions. Fade-in transitions will be the same duration, but will be delayed per the amount set here.",
+      "on": [
+        {
+          "events": {"type": "click"},
+          "update": "(event.shiftKey || event.metaKey || event.ctrlKey ? 4 : 1) *1000"
+        }
+      ]
     },
-    "title": {
-      "text": "SLAVES AND FREE NEGROES.",
-      "orient": "top",
-      "anchor": "middle",
-      "font": {"signal": "font"},
-      "fontSize": 14,
-      "offset": -61,
-      "fontWeight": "800",
-      "color": "#666",
-      "zindex": 99
+    {
+      "name": "font",
+      "description": "font to be used throught the chart",
+      "value": "sans-serif"
     },
-    "width": 400,
-    "padding": 5,
-    "signals": [
-      {
-        "name": "duration",
-        "description": "The duration for the zoom transitions. Fade-in transitions will be the same duration, but will be delayed per the amount set here.",
-        "on": [
-          {
-            "events": {"type": "click"},
-            "update": "(event.shiftKey || event.metaKey || event.ctrlKey ? 4 : 1) *1000"
-          }
-        ]
-      },
-      {
-        "name": "font",
-        "description": "font to be used throught the chart",
-        "value": "sans-serif"
-      },
-      {
-        "name": "labelFontSize",
-        "description": "font size for the labels",
-        "value": 10
-      },
-      {
-        "name": "labelFontWeight",
-        "description": "font weight for the labels",
-        "value": 100
-      },
-      {
-        "name": "labelFontOpacity",
-        "description": "label font opacity for the labels",
-        "value": 0.5
-      },
-      {
-        "name": "yDomainOffset",
-        "description": "offset for the y domain line",
-        "value": -50
-      },
-      {
-        "name": "height",
-        "description": "dynamically adjust the height based on the width",
-        "init": "1.3*width"
-      },
-      {
-        "name": "milestoneRadius",
-        "description": "radius of the milestone circle marks",
-        "value": 3.5
-      },
-      {
-        "name": "infoIconPath",
-        "value": "M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"
-      },
-      {
-        "name": "backgroundImageXY",
-        "description": "x and y coordinates for the background image",
-        "value": [-40, -80]
-      },
-      {
-        "name": "milestoneHoverFocus",
-        "value": null,
-        "on": [
-          {
-            "events": {"type": "mouseover", "markname": "milestone_symbols"},
-            "update": "datum"
+    {
+      "name": "labelFontSize",
+      "description": "font size for the labels",
+      "value": 10
+    },
+    {
+      "name": "labelFontWeight",
+      "description": "font weight for the labels",
+      "value": 100
+    },
+    {
+      "name": "labelFontOpacity",
+      "description": "label font opacity for the labels",
+      "value": 0.5
+    },
+    {
+      "name": "yDomainOffset",
+      "description": "offset for the y domain line",
+      "value": -50
+    },
+    {
+      "name": "height",
+      "description": "dynamically adjust the height based on the width",
+      "init": "1.3*width"
+    },
+    {
+      "name": "milestoneRadius",
+      "description": "radius of the milestone circle marks",
+      "value": 3.5
+    },
+    {
+      "name": "infoIconPath",
+      "value": "M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"
+    },
+    {
+      "name": "backgroundImageXY",
+      "description": "x and y coordinates for the background image",
+      "value": [-40, -80]
+    },
+    {
+      "name": "milestoneHoverFocus",
+      "value": null,
+      "on": [
+        {
+          "events": {"type": "mouseover", "markname": "milestone_symbols"},
+          "update": "datum"
+        },
+        {"events": {"type": "mouseout"}, "update": "null"}
+      ]
+    },
+    {
+      "name": "k",
+      "value": 1,
+      "description": "The scale used for zooming based on the focused node",
+      "on": [
+        {
+          "events": [{"type": "click"}],
+          "update": "t!== 1 ? k : isValid(datum) ? !isValid(datum['index']) ? 1 : k > 1 ? 1 : (_width < _height ? _width : _height)/(2*(milestoneRadius)) : 1"
+        }
+      ]
+    },
+    {
+      "name": "k0",
+      "value": 1,
+      "description": "The previous scale used for zooming based on the focused node",
+      "on": [
+        {
+          "events": [{"signal": "data('focus0')"}],
+          "update": "pluck(data('focus0'), 'k')[0]"
+        }
+      ]
+    },
+    {
+      "name": "root",
+      "description": "The initial node (in this case, background image) which all zoom calculations are based off",
+      "update": "{index: 0, timestamp: now(), year: null, x: (width)/2, 'y': (height)/2, width: width*1.2, height: height*1.15837, k: 1}"
+    },
+    {
+      "name": "focus",
+      "description": "The user-selected node",
+      "init": "root",
+      "on": [
+        {
+          "events": {"type": "click"},
+          "update": "t!== 1  ? focus : !isValid(datum) || !isValid(datum['index']) || focus['index'] === datum['index'] ? {timestamp: now(), index: root['index'], x: root['x'], 'y': root['y'], 'width': root['width'], height: root['height'], k: root['k']} : {timestamp: now(), index: datum['index'], x: datum['x'], y: datum['y'], width: root['width']*k, height: root['height']*k, k: k>1? k : k}"
+        }
+      ]
+    },
+    {
+      "name": "focus0",
+      "description": "The previous user-selected node",
+      "update": "data('focus0') && length(data('focus0'))>0 ? data('focus0')[0] : focus"
+    },
+    {
+      "name": "timer",
+      "description": "The timer to be used for transitions such as zoom, fade, etc.",
+      "on": [{"events": "timer", "update": "now()"}]
+    },
+    {
+      "name": "interpolateTime",
+      "description": "the start and end times in miliseconds for animation interpolations",
+      "on": [
+        {
+          "events": {"type": "click"},
+          "update": "t!==1 ? interpolateTime : {'start': timer, 'end': timer+duration}"
+        }
+      ]
+    },
+    {
+      "name": "t",
+      "description": "The normalized time for easing",
+      "update": "interpolateTime ? clamp((timer-interpolateTime.start)/(interpolateTime.end-interpolateTime.start), 0, 1): 1"
+    },
+    {
+      "name": "tEase",
+      "value": 1,
+      "description": "The easing calculation. Currently set as easeInOutCubic",
+      "update": "t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1"
+    },
+    {
+      "name": "interpolateTimeDelayed",
+      "description": "The delayed time for easing",
+      "on": [
+        {
+          "events": {"signal": "interpolateTime"},
+          "update": "{'start': interpolateTime['end'], 'end': interpolateTime['end']+duration}"
+        }
+      ]
+    },
+    {
+      "name": "tDelayed",
+      "description": "The delayed normalized time for easing",
+      "update": "interpolateTimeDelayed ? clamp((timer-interpolateTimeDelayed.start)/(interpolateTimeDelayed.end-interpolateTimeDelayed.start), 0, 1): null"
+    },
+    {
+      "name": "tEaseDelayed",
+      "description": "The delayed easing calculation. Currently set as easeInOutCubic",
+      "update": "tDelayed < 0.5 ? 4 * tDelayed * tDelayed * tDelayed : (tDelayed - 1) * (2 * tDelayed - 2) * (2 * tDelayed - 2) + 1"
+    },
+    {
+      "name": "showDetails",
+      "description": "A boolean to indicate whether to show a node's details",
+      "value": false,
+      "on": [
+        {
+          "events": {"type": "click"},
+          "update": "t!== 1 ? showDetails : focus['index']===root['index'] ? false : true"
+        }
+      ]
+    },
+    {
+      "name": "_width",
+      "description": "calculated width after marks have been drawn",
+      "init": "width",
+      "on": [
+        {
+          "events": {"signal": "timer + 1000 > now()"},
+          "update": "pluck(pluck(data('root'), 'bounds'), 'x2')[0]"
+        }
+      ]
+    },
+    {
+      "name": "_height",
+      "description": "calculated width after marks have been drawn",
+      "init": "height",
+      "on": [
+        {
+          "events": {"signal": "timer + 1000 > now()"},
+          "update": "pluck(pluck(data('root'), 'bounds'), 'y2')[0]"
+        }
+      ]
+    }
+  ],
+  "marks": [
+    {
+      "name": "background_img",
+      "description": "background image to make the visual look like the original plate",
+      "type": "image",
+      "encode": {
+        "enter": {
+          "url": {
+            "value": "https://raw.githubusercontent.com/Giammaria/Du-Bois-DVS-challenge/main/2024/challenge-02/_artifacts/background.jpg"
           },
-          {"events": {"type": "mouseout"}, "update": "null"}
-        ]
-      },
-      {
-        "name": "k",
-        "value": 1,
-        "description": "The scale used for zooming based on the focused node",
-        "on": [
-          {
-            "events": [{"type": "click"}],
-            "update": "t!== 1 ? k : isValid(datum) ? !isValid(datum['index']) ? 1 : k > 1 ? 1 : (_width < _height ? _width : _height)/(2*(milestoneRadius)) : 1"
+          "aspect": {"value": true},
+          "width": {"signal": "root['width']"}
+        },
+        "update": {
+          "x": {
+            "signal": "lerp([root['x'] + ((backgroundImageXY[0]) - focus0['x']) * k0, root['x'] + ((backgroundImageXY[0]) - focus['x']) * k], tEase)"
+          },
+          "y": {
+            "signal": "lerp([root['y'] + (backgroundImageXY[1] - focus0['y']) * k0, root['y'] + (backgroundImageXY[1] - focus['y']) * k], tEase)"
+          },
+          "width": {
+            "signal": "lerp([k0*root['width'], k*root['width']], tEase)"
           }
-        ]
-      },
-      {
-        "name": "k0",
-        "value": 1,
-        "description": "The previous scale used for zooming based on the focused node",
-        "on": [
-          {
-            "events": [{"signal": "data('focus0')"}],
-            "update": "pluck(data('focus0'), 'k')[0]"
-          }
-        ]
-      },
-      {
-        "name": "root",
-        "description": "The initial node (in this case, background image) which all zoom calculations are based off",
-        "update": "{index: 0, timestamp: now(), year: null, x: (width)/2, 'y': (height)/2, width: width*1.2, height: height*1.15837, k: 1}"
-      },
-      {
-        "name": "focus",
-        "description": "The user-selected node",
-        "init": "root",
-        "on": [
-          {
-            "events": {"type": "click"},
-            "update": "t!== 1  ? focus : !isValid(datum) || !isValid(datum['index']) || focus['index'] === datum['index'] ? {timestamp: now(), index: root['index'], x: root['x'], 'y': root['y'], 'width': root['width'], height: root['height'], k: root['k']} : {timestamp: now(), index: datum['index'], x: datum['x'], y: datum['y'], width: root['width']*k, height: root['height']*k, k: k>1? k : k}"
-          }
-        ]
-      },
-      {
-        "name": "focus0",
-        "description": "The previous user-selected node",
-        "update": "data('focus0') && length(data('focus0'))>0 ? data('focus0')[0] : focus"
-      },
-      {
-        "name": "timer",
-        "description": "The timer to be used for transitions such as zoom, fade, etc.",
-        "on": [{"events": "timer", "update": "now()"}]
-      },
-      {
-        "name": "interpolateTime",
-        "description": "the start and end times in miliseconds for animation interpolations",
-        "on": [
-          {
-            "events": {"type": "click"},
-            "update": "t!==1 ? interpolateTime : {'start': timer, 'end': timer+duration}"
-          }
-        ]
-      },
-      {
-        "name": "t",
-        "description": "The normalized time for easing",
-        "update": "interpolateTime ? clamp((timer-interpolateTime.start)/(interpolateTime.end-interpolateTime.start), 0, 1): 1"
-      },
-      {
-        "name": "tEase",
-        "value": 1,
-        "description": "The easing calculation. Currently set as easeInOutCubic",
-        "update": "t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1"
-      },
-      {
-        "name": "interpolateTimeDelayed",
-        "description": "The delayed time for easing",
-        "on": [
-          {
-            "events": {"signal": "interpolateTime"},
-            "update": "{'start': interpolateTime['end'], 'end': interpolateTime['end']+duration}"
-          }
-        ]
-      },
-      {
-        "name": "tDelayed",
-        "description": "The delayed normalized time for easing",
-        "update": "interpolateTimeDelayed ? clamp((timer-interpolateTimeDelayed.start)/(interpolateTimeDelayed.end-interpolateTimeDelayed.start), 0, 1): null"
-      },
-      {
-        "name": "tEaseDelayed",
-        "description": "The delayed easing calculation. Currently set as easeInOutCubic",
-        "update": "tDelayed < 0.5 ? 4 * tDelayed * tDelayed * tDelayed : (tDelayed - 1) * (2 * tDelayed - 2) * (2 * tDelayed - 2) + 1"
-      },
-      {
-        "name": "showDetails",
-        "description": "A boolean to indicate whether to show a node's details",
-        "value": false,
-        "on": [
-          {
-            "events": {"type": "click"},
-            "update": "t!== 1 ? showDetails : focus['index']===root['index'] ? false : true"
-          }
-        ]
-      },
-      {
-        "name": "_width",
-        "description": "calculated width after marks have been drawn",
-        "init": "width",
-        "on": [
-          {
-            "events": {"signal": "timer + 1000 > now()"},
-            "update": "pluck(pluck(data('root'), 'bounds'), 'x2')[0]"
-          }
-        ]
-      },
-      {
-        "name": "_height",
-        "description": "calculated width after marks have been drawn",
-        "init": "height",
-        "on": [
-          {
-            "events": {"signal": "timer + 1000 > now()"},
-            "update": "pluck(pluck(data('root'), 'bounds'), 'y2')[0]"
-          }
-        ]
+        }
       }
-    ],
-    "marks": [
-      {
-        "name": "background_img",
-        "description": "background image to make the visual look like the original plate",
-        "type": "image",
-        "encode": {
-          "enter": {
-            "url": {
-              "value": "https://raw.githubusercontent.com/Giammaria/Du-Bois-DVS-challenge/main/2024/challenge-02/_artifacts/background.jpg"
-            },
-            "aspect": {"value": true},
-            "width": {"signal": "root['width']"}
+    },
+    {
+      "name": "info_icon",
+      "description": "an icon that displays more information about the visual on hover",
+      "type": "symbol",
+      "encode": {
+        "update": {
+          "shape": {"signal": "infoIconPath"},
+          "size": {"signal": "lerp([0.0045*k0, 0.0045*k], tEase)"},
+          "x": {
+            "signal": "lerp([root['x'] + ((width+5) - focus0['x']) * k0, root['x'] + ((width+5) - focus['x']) * k], tEase)"
           },
-          "update": {
-            "x": {
-              "signal": "lerp([root['x'] + ((backgroundImageXY[0]) - focus0['x']) * k0, root['x'] + ((backgroundImageXY[0]) - focus['x']) * k], tEase)"
-            },
-            "y": {
-              "signal": "lerp([root['y'] + (backgroundImageXY[1] - focus0['y']) * k0, root['y'] + (backgroundImageXY[1] - focus['y']) * k], tEase)"
-            },
-            "width": {
-              "signal": "lerp([k0*root['width'], k*root['width']], tEase)"
+          "y": {
+            "signal": "lerp([root['y'] + (-105 - focus0['y']) * k0, root['y'] + (-105 - focus['y']) * k], tEase)"
+          },
+          "fill": {"value": "#666"},
+          "cursor": {"value": "pointer"},
+          "tooltip": {
+            "signal": "{title: 'Interaction Instructions', 'Zoom-In:': 'Click on the circles to view milestone information.', 'Zoom-Out:': 'Click on either the focused circle, or the area outside the focused circle.'}"
+          }
+        }
+      }
+    },
+    {
+      "name": "x_axis_label_marks",
+      "type": "text",
+      "description": "the year x-axis labels",
+      "from": {"data": "x_axis"},
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "lerp([root['x'] + (datum['x'] - focus0['x']) * k0, root['x'] + (datum['x'] - focus['x']) * k], tEase)"
+          },
+          "y": {
+            "signal": "lerp([root['y'] + (datum['y'] - focus0['y']) * k0, root['y'] + (datum['y'] - focus['y']) * k], tEase)"
+          },
+          "text": {"field": "label"},
+          "align": {"value": "center"},
+          "baseline": {"value": "middle"},
+          "opacity": {"signal": "labelFontOpacity"},
+          "font": {"signal": "font"},
+          "fontSize": {"value": 8},
+          "fontWeight": {"signal": "labelFontWeight"}
+        }
+      }
+    },
+    {
+      "name": "y_axis_label_marks",
+      "type": "text",
+      "description": "the year y-axis labels",
+      "from": {"data": "y_axis"},
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "lerp([root['x'] + (datum['x'] - focus0['x']) * k0, root['x'] + (datum['x'] - focus['x']) * k], tEase)"
+          },
+          "dx": {"field": "dx"},
+          "y": {
+            "signal": "lerp([root['y'] + (datum['y'] - focus0['y']) * k0, root['y'] + (datum['y'] - focus['y']) * k], tEase)"
+          },
+          "text": {"field": "Year"},
+          "align": {"value": "left"},
+          "baseline": {"value": "middle"},
+          "opacity": {"signal": "labelFontOpacity"},
+          "font": {"signal": "font"},
+          "fontSize": {"signal": "labelFontSize"},
+          "fontWeight": {"signal": "labelFontWeight"}
+        }
+      }
+    },
+    {
+      "name": "y_axis_tick_marks",
+      "type": "rect",
+      "from": {"data": "y_axis_ticks"},
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "lerp([root['x'] + (datum['x'] - focus0['x']) * k0, root['x'] + (datum['x'] - focus['x']) * k], tEase)"
+          },
+          "x2": {
+            "signal": "lerp([root['x'] + (datum['x2'] - focus0['x']) * k0, root['x'] + (datum['x2'] - focus['x']) * k], tEase)"
+          },
+          "y": {
+            "signal": "lerp([root['y'] + (datum['y'] - focus0['y']) * k0, root['y'] + (datum['y'] - focus['y']) * k], tEase)"
+          },
+          "height": {"value": 0.5},
+          "fill": {"value": "#777"}
+        }
+      }
+    },
+    {
+      "name": "labels_title_mark",
+      "type": "text",
+      "from": {"data": "labels_title"},
+      "description": "title that sits over the labels on the right side",
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "lerp([root['x'] + (datum['x'] - focus0['x']) * k0, root['x'] + (datum['x'] - focus['x']) * k], tEase)"
+          },
+          "y": {
+            "signal": "lerp([root['y'] + (datum['y'] - focus0['y']) * k0, root['y'] + (datum['y'] - focus['y']) * k], tEase)"
+          },
+          "text": {"field": "title"},
+          "fontWeight": {"signal": "labelFontWeight"},
+          "align": {"value": "center"},
+          "fontSize": {"value": 7},
+          "font": {"signal": "font"},
+          "opacity": {"signal": "labelFontOpacity"},
+          "titleX": {"signal": "range('x')[0]+25"},
+          "lineHeight": {"value": 6}
+        }
+      }
+    },
+    {
+      "name": "label_marks",
+      "type": "text",
+      "description": "the 'Free' percentage labels for each year",
+      "from": {"data": "labels"},
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "lerp([root['x'] + (datum['x'] - focus0['x']) * k0, root['x'] + (datum['x'] - focus['x']) * k], tEase)"
+          },
+          "dx": {"field": "dx"},
+          "y": {
+            "signal": "lerp([root['y'] + (datum['y'] - focus0['y']) * k0, root['y'] + (datum['y'] - focus['y']) * k], tEase)"
+          },
+          "dy": {"field": "dy"},
+          "text": {"field": "freeLabel"},
+          "align": {"value": "left"},
+          "baseline": {"value": "middle"},
+          "opacity": {"signal": "labelFontOpacity"},
+          "font": {"signal": "font"},
+          "fontSize": {"signal": "labelFontSize"},
+          "fontWeight": {"signal": "labelFontWeight"}
+        }
+      }
+    },
+    {
+      "name": "facet_group",
+      "type": "group",
+      "from": {
+        "facet": {
+          "name": "freedom_stack_facet",
+          "data": "freedom_stack",
+          "groupby": "key"
+        }
+      },
+      "marks": [
+        {
+          "type": "area",
+          "from": {"data": "freedom_stack_facet"},
+          "encode": {
+            "update": {
+              "orient": {"value": "horizontal"},
+              "x": {
+                "signal": "lerp([root['x'] + (datum['x0'] - focus0['x']) * k0, root['x'] + (datum['x0'] - focus['x']) * k], tEase)"
+              },
+              "y": {
+                "signal": "lerp([root['y'] + (datum['y'] - focus0['y']) * k0, root['y'] + (datum['y'] - focus['y']) * k], tEase)"
+              },
+              "x2": {
+                "signal": "lerp([root['x'] + (datum['x1'] - focus0['x']) * k0, root['x'] + (datum['x1'] - focus['x']) * k], tEase)"
+              },
+              "fill": {"scale": "color", "field": "key"}
             }
           }
         }
-      },
+      ]
+    },
       {
-        "name": "info_icon",
-        "description": "an icon that displays more information about the visual on hover",
-        "type": "symbol",
-        "encode": {
-          "update": {
-            "shape": {"signal": "infoIconPath"},
-            "size": {"signal": "lerp([0.0045*k0, 0.0045*k], tEase)"},
-            "x": {
-              "signal": "lerp([root['x'] + ((width+5) - focus0['x']) * k0, root['x'] + ((width+5) - focus['x']) * k], tEase)"
-            },
-            "y": {
-              "signal": "lerp([root['y'] + (-105 - focus0['y']) * k0, root['y'] + (-105 - focus['y']) * k], tEase)"
-            },
-            "fill": {"value": "#666"},
-            "cursor": {"value": "pointer"},
-            "tooltip": {
-              "signal": "{title: 'Interaction Instructions', 'Zoom-In:': 'Click on the circles to view milestone information.', 'Zoom-Out:': 'Click on either the focused circle, or the area outside the focused circle.'}"
+      "name": "y_axis_grid_marks",
+      "type": "rect",
+      "from": {"data": "y_axis_ticks"},
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "lerp([root['x'] + (scale('x', 0.0005) - focus0['x']) * k0, root['x'] + (scale('x', 0.0005) - focus['x']) * k], tEase)"
+          },
+          "x2": {
+            "signal": "lerp([root['x'] + (scale('x', 0.0285) - focus0['x']) * k0, root['x'] + (scale('x', 0.0285) - focus['x']) * k], tEase)"
+          },
+          "y": {
+            "signal": "lerp([root['y'] + (datum['y'] - focus0['y']) * k0, root['y'] + (datum['y'] - focus['y']) * k], tEase)"
+          },
+          "height": {"value": 0.5},
+          "stroke": {"value": "#D2BDAC"},
+          "fill": {"value": "#D2BDAC"}
+        }
+      }
+    },
+    {
+      "type": "area",
+      "from": {"data": "area_break"},
+      "encode": {
+        "update": {
+          "orient": {"value": "horizontal"},
+          "x": {
+            "signal": "lerp([root['x'] + (datum['x'] - focus0['x']) * k0, root['x'] + (datum['x'] - focus['x']) * k], tEase)"
+          },
+          "y": {
+            "signal": "lerp([root['y'] + (datum['y'] - focus0['y']) * k0, root['y'] + (datum['y'] - focus['y']) * k], tEase)"
+          },
+          "x2": {
+            "signal": "lerp([root['x'] + (datum['x2'] - focus0['x']) * k0, root['x'] + (datum['x2'] - focus['x']) * k], tEase)"
+          },
+          "fill": {"value": "#D7C9BB"}
+        }
+      }
+    },
+    {
+      "name": "milestone_domain_line",
+      "type": "rect",
+      "from": {"data": "milestone_domain"},
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "lerp([root['x'] + (datum['x'] - focus0['x']) * k0, root['x'] + (datum['x'] - focus['x']) * k], tEase)"
+          },
+          "x2": {
+            "signal": "lerp([root['x'] + (datum['x2'] - focus0['x']) * k0, root['x'] + (datum['x2'] - focus['x']) * k], tEase)"
+          },
+          "y": {
+            "signal": "lerp([root['y'] + (datum['y'] - focus0['y']) * k0, root['y'] + (datum['y'] - focus['y']) * k], tEase)"
+          },
+          "y2": {
+            "signal": "lerp([root['y'] + (datum['y2'] - focus0['y']) * k0, root['y'] + (datum['y2'] - focus['y']) * k], tEase)"
+          },
+          "fill": {"value": "#777"}
+        }
+      }
+    },
+    {
+      "name": "milestone_tick_marks",
+      "type": "rect",
+      "from": {"data": "milestones"},
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "lerp([root['x'] + (datum['x']+milestoneRadius - focus0['x']) * k0, root['x'] + (datum['x']+milestoneRadius - focus['x']) * k], tEase)"
+          },
+          "x2": {
+            "signal": "lerp([root['x'] + (datum['x2'] - focus0['x']) * k0, root['x'] + (datum['x2'] - focus['x']) * k], tEase)"
+          },
+          "y": {
+            "signal": "lerp([root['y'] + (datum['y'] - focus0['y']) * k0, root['y'] + (datum['y'] - focus['y']) * k], tEase)"
+          },
+          "height": {"value": 0.5},
+          "fill": {"value": "#777"}
+        }
+      }
+    },
+    {
+      "name": "milestone_symbols",
+      "type": "arc",
+      "from": {"data": "milestones"},
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "lerp([root['x'] + (datum['x'] - focus0['x']) * k0, root['x'] + (datum['x'] - focus['x']) * k], tEase)"
+          },
+          "y": {
+            "signal": "lerp([root['y'] + (datum['y'] - focus0['y']) * k0, root['y'] + (datum['y'] - focus['y']) * k], tEase)"
+          },
+          "shape": {"signal": "'circle'"},
+          "fill": {"value": "transparent"},
+          "startAngle": {"value": 0},
+          "endAngle": {"signal": "2*PI"},
+          "innerRadius": {"value": 0},
+          "outerRadius": {
+            "signal": "lerp([(milestoneRadius)*k0, (milestoneRadius)*k], tEase)"
+          },
+          "strokeWidth": {
+            "signal": "lerp([min((1)*k0, 10), min((1)*k, 10)], tEase)"
+          },
+          "stroke": {
+            "signal": "(k>1 && focus['index'] === datum['index']) || (isValid(milestoneHoverFocus) && isValid(milestoneHoverFocus['index']) && milestoneHoverFocus['index'] === datum['index']) ? '#0F7F12' : '#999'"
+          },
+          "cursor": {"value": "pointer"},
+          "tooltip": {"signal": "datum['year']"}
+        }
+      }
+    },
+    {
+      "name": "details_title",
+      "details": "the name of the node (appears on zoom)",
+      "type": "text",
+      "from": {"data": "details_data"},
+      "interactive": false,
+      "encode": {
+        "enter": {
+          "text": {"signal": "datum['year']"},
+          "fill": {"value": "#000"},
+          "font": {"signal": "font"},
+          "fontSize": {"signal": "0.15*(_width < _height ? width : height)"},
+          "align": {"value": "center"},
+          "x": {"signal": "width/2"},
+          "y": {"signal": "height/2-(milestoneRadius*k)*0.5"},
+          "fillOpacity": {"value": 0.65},
+          "baseline": {"value": "bottom"},
+          "opacity": {"value": 0}
+        },
+        "update": {
+          "opacity": {
+            "signal": "!showDetails ? 0 : tEaseDelayed * labelFontOpacity"
+          }
+        }
+      }
+    },
+    {
+      "name": "details_desecription",
+      "details": "Wrapped text that further describes the user-selected node (appears on zoom)",
+      "type": "text",
+      "from": {"data": "details_COE"},
+      "interactive": false,
+      "encode": {
+        "enter": {
+          "text": {"field": "line"},
+          "fill": {"value": "#000"},
+          "font": {"signal": "font"},
+          "fontSize": {"field": "fontSize"},
+          "align": {"value": "center"},
+          "x": {"signal": "width/2"},
+          "y": {
+            "signal": "data('details_title')[0]['bounds']['y2']+(0.1*milestoneRadius*k)+datum['y']"
+          },
+          "baseline": {"value": "top"},
+          "fillOpacity": {"value": 0.65},
+          "opacity": {"value": 0}
+        },
+        "update": {"opacity": {"signal": "!showDetails ? 0 : tEaseDelayed"}}
+      }
+    },
+    {
+      "name": "details_flag_image",
+      "details": "Pan African flag (appears on zoom)",
+      "type": "image",
+      "interactive": false,
+      "encode": {
+        "enter": {
+          "url": {
+            "value": "https://raw.githubusercontent.com/Giammaria/Du-Bois-DVS-challenge/main/2024/challenge-02/_artifacts/pan-african-flag-grunge.png"
+          },
+          "fillOpacity": {"value": 0.25},
+          "opacity": {"value": 0}
+        },
+        "update": {
+          "opacity": {"signal": "!showDetails ? 0 : tEaseDelayed"},
+          "x": {"signal": "width/2-width/6"},
+          "width": {"signal": "width/3"},
+          "y": {"signal": "showDetails ? height*0.60 : 0"}
+        }
+      }
+    },
+    {
+      "type": "group",
+      "name": "footer_group",
+      "description": "The group of marks located at the bottom of the canvas that provide additional information about the visual",
+      "marks": [
+        {
+          "name": "footer_prefix_text",
+          "description": "The labels for each footer item",
+          "type": "text",
+          "from": {"data": "footer"},
+          "interactive": false,
+          "encode": {
+            "update": {
+              "opacity": {"value": 1},
+              "fill": {"signal": "'#888'"},
+              "font": {"signal": "font"},
+              "fontWeight": {"value": 100},
+              "fontSize": {"value": 10},
+              "baseline": {"value": "middle"},
+              "x": {"signal": "0"},
+              "y": {
+                "signal": "lerp([scale('yScaleFooter', datum['id'])*k0,scale('yScaleFooter', datum['id'])*k], tEase)"
+              },
+              "text": {"signal": "datum['text'][0]"}
             }
-          }
-        }
-      },
-      {
-        "name": "x_axis_label_marks",
-        "type": "text",
-        "description": "the year x-axis labels",
-        "from": {"data": "x_axis"},
-        "encode": {
-          "update": {
-            "x": {
-              "signal": "lerp([root['x'] + (datum['x'] - focus0['x']) * k0, root['x'] + (datum['x'] - focus['x']) * k], tEase)"
-            },
-            "y": {
-              "signal": "lerp([root['y'] + (datum['y'] - focus0['y']) * k0, root['y'] + (datum['y'] - focus['y']) * k], tEase)"
-            },
-            "text": {"field": "label"},
-            "align": {"value": "center"},
-            "baseline": {"value": "middle"},
-            "opacity": {"signal": "labelFontOpacity"},
-            "font": {"signal": "font"},
-            "fontSize": {"value": 8},
-            "fontWeight": {"signal": "labelFontWeight"}
-          }
-        }
-      },
-      {
-        "name": "y_axis_label_marks",
-        "type": "text",
-        "description": "the year y-axis labels",
-        "from": {"data": "y_axis"},
-        "encode": {
-          "update": {
-            "x": {
-              "signal": "lerp([root['x'] + (datum['x'] - focus0['x']) * k0, root['x'] + (datum['x'] - focus['x']) * k], tEase)"
-            },
-            "dx": {"field": "dx"},
-            "y": {
-              "signal": "lerp([root['y'] + (datum['y'] - focus0['y']) * k0, root['y'] + (datum['y'] - focus['y']) * k], tEase)"
-            },
-            "text": {"field": "Year"},
-            "align": {"value": "left"},
-            "baseline": {"value": "middle"},
-            "opacity": {"signal": "labelFontOpacity"},
-            "font": {"signal": "font"},
-            "fontSize": {"signal": "labelFontSize"},
-            "fontWeight": {"signal": "labelFontWeight"}
-          }
-        }
-      },
-      {
-        "name": "y_axis_tick_marks",
-        "type": "rect",
-        "from": {"data": "y_axis_ticks"},
-        "encode": {
-          "update": {
-            "x": {
-              "signal": "lerp([root['x'] + (datum['x'] - focus0['x']) * k0, root['x'] + (datum['x'] - focus['x']) * k], tEase)"
-            },
-            "x2": {
-              "signal": "lerp([root['x'] + (datum['x2'] - focus0['x']) * k0, root['x'] + (datum['x2'] - focus['x']) * k], tEase)"
-            },
-            "y": {
-              "signal": "lerp([root['y'] + (datum['y'] - focus0['y']) * k0, root['y'] + (datum['y'] - focus['y']) * k], tEase)"
-            },
-            "height": {"value": 0.5},
-            "fill": {"value": "#777"}
-          }
-        }
-      },
-      {
-        "name": "labels_title_mark",
-        "type": "text",
-        "from": {"data": "labels_title"},
-        "description": "title that sits over the labels on the right side",
-        "encode": {
-          "update": {
-            "x": {
-              "signal": "lerp([root['x'] + (datum['x'] - focus0['x']) * k0, root['x'] + (datum['x'] - focus['x']) * k], tEase)"
-            },
-            "y": {
-              "signal": "lerp([root['y'] + (datum['y'] - focus0['y']) * k0, root['y'] + (datum['y'] - focus['y']) * k], tEase)"
-            },
-            "text": {"field": "title"},
-            "fontWeight": {"signal": "labelFontWeight"},
-            "align": {"value": "center"},
-            "fontSize": {"value": 7},
-            "font": {"signal": "font"},
-            "opacity": {"signal": "labelFontOpacity"},
-            "titleX": {"signal": "range('x')[0]+25"},
-            "lineHeight": {"value": 6}
-          }
-        }
-      },
-      {
-        "name": "label_marks",
-        "type": "text",
-        "description": "the 'Free' percentage labels for each year",
-        "from": {"data": "labels"},
-        "encode": {
-          "update": {
-            "x": {
-              "signal": "lerp([root['x'] + (datum['x'] - focus0['x']) * k0, root['x'] + (datum['x'] - focus['x']) * k], tEase)"
-            },
-            "dx": {"field": "dx"},
-            "y": {
-              "signal": "lerp([root['y'] + (datum['y'] - focus0['y']) * k0, root['y'] + (datum['y'] - focus['y']) * k], tEase)"
-            },
-            "dy": {"field": "dy"},
-            "text": {"field": "freeLabel"},
-            "align": {"value": "left"},
-            "baseline": {"value": "middle"},
-            "opacity": {"signal": "labelFontOpacity"},
-            "font": {"signal": "font"},
-            "fontSize": {"signal": "labelFontSize"},
-            "fontWeight": {"signal": "labelFontWeight"}
-          }
-        }
-      },
-      {
-        "name": "facet_group",
-        "type": "group",
-        "from": {
-          "facet": {
-            "name": "freedom_stack_facet",
-            "data": "freedom_stack",
-            "groupby": "key"
           }
         },
-        "marks": [
-          {
-            "type": "area",
-            "from": {"data": "freedom_stack_facet"},
-            "encode": {
-              "update": {
-                "orient": {"value": "horizontal"},
-                "x": {
-                  "signal": "lerp([root['x'] + (datum['x0'] - focus0['x']) * k0, root['x'] + (datum['x0'] - focus['x']) * k], tEase)"
-                },
-                "y": {
-                  "signal": "lerp([root['y'] + (datum['y'] - focus0['y']) * k0, root['y'] + (datum['y'] - focus['y']) * k], tEase)"
-                },
-                "x2": {
-                  "signal": "lerp([root['x'] + (datum['x1'] - focus0['x']) * k0, root['x'] + (datum['x1'] - focus['x']) * k], tEase)"
-                },
-                "fill": {"scale": "color", "field": "key"}
-              }
-            }
-          }
-        ]
-      },
-      {
-        "type": "area",
-        "from": {"data": "area_break"},
-        "encode": {
-          "update": {
-            "orient": {"value": "horizontal"},
-            "x": {
-              "signal": "lerp([root['x'] + (datum['x'] - focus0['x']) * k0, root['x'] + (datum['x'] - focus['x']) * k], tEase)"
-            },
-            "y": {
-              "signal": "lerp([root['y'] + (datum['y'] - focus0['y']) * k0, root['y'] + (datum['y'] - focus['y']) * k], tEase)"
-            },
-            "x2": {
-              "signal": "lerp([root['x'] + (datum['x2'] - focus0['x']) * k0, root['x'] + (datum['x2'] - focus['x']) * k], tEase)"
-            },
-            "fill": {"value": "#D7C9BB"}
-          }
-        }
-      },
-      {
-        "name": "milestone_domain_line",
-        "type": "rect",
-        "from": {"data": "milestone_domain"},
-        "encode": {
-          "update": {
-            "x": {
-              "signal": "lerp([root['x'] + (datum['x'] - focus0['x']) * k0, root['x'] + (datum['x'] - focus['x']) * k], tEase)"
-            },
-            "x2": {
-              "signal": "lerp([root['x'] + (datum['x2'] - focus0['x']) * k0, root['x'] + (datum['x2'] - focus['x']) * k], tEase)"
-            },
-            "y": {
-              "signal": "lerp([root['y'] + (datum['y'] - focus0['y']) * k0, root['y'] + (datum['y'] - focus['y']) * k], tEase)"
-            },
-            "y2": {
-              "signal": "lerp([root['y'] + (datum['y2'] - focus0['y']) * k0, root['y'] + (datum['y2'] - focus['y']) * k], tEase)"
-            },
-            "fill": {"value": "#777"}
-          }
-        }
-      },
-      {
-        "name": "milestone_tick_marks",
-        "type": "rect",
-        "from": {"data": "milestones"},
-        "encode": {
-          "update": {
-            "x": {
-              "signal": "lerp([root['x'] + (datum['x']+milestoneRadius - focus0['x']) * k0, root['x'] + (datum['x']+milestoneRadius - focus['x']) * k], tEase)"
-            },
-            "x2": {
-              "signal": "lerp([root['x'] + (datum['x2'] - focus0['x']) * k0, root['x'] + (datum['x2'] - focus['x']) * k], tEase)"
-            },
-            "y": {
-              "signal": "lerp([root['y'] + (datum['y'] - focus0['y']) * k0, root['y'] + (datum['y'] - focus['y']) * k], tEase)"
-            },
-            "height": {"value": 0.5},
-            "fill": {"value": "#777"}
-          }
-        }
-      },
-      {
-        "name": "milestone_symbols",
-        "type": "arc",
-        "from": {"data": "milestones"},
-        "encode": {
-          "update": {
-            "x": {
-              "signal": "lerp([root['x'] + (datum['x'] - focus0['x']) * k0, root['x'] + (datum['x'] - focus['x']) * k], tEase)"
-            },
-            "y": {
-              "signal": "lerp([root['y'] + (datum['y'] - focus0['y']) * k0, root['y'] + (datum['y'] - focus['y']) * k], tEase)"
-            },
-            "shape": {"signal": "'circle'"},
-            "fill": {"value": "transparent"},
-            "startAngle": {"value": 0},
-            "endAngle": {"signal": "2*PI"},
-            "innerRadius": {"value": 0},
-            "outerRadius": {
-              "signal": "lerp([(milestoneRadius)*k0, (milestoneRadius)*k], tEase)"
-            },
-            "strokeWidth": {
-              "signal": "lerp([min((1)*k0, 10), min((1)*k, 10)], tEase)"
-            },
-            "stroke": {
-              "signal": "(k>1 && focus['index'] === datum['index']) || (isValid(milestoneHoverFocus) && isValid(milestoneHoverFocus['index']) && milestoneHoverFocus['index'] === datum['index']) ? '#0F7F12' : '#999'"
-            },
-            "cursor": {"value": "pointer"},
-            "tooltip": {"signal": "datum['year']"}
-          }
-        }
-      },
-      {
-        "name": "details_title",
-        "details": "the name of the node (appears on zoom)",
-        "type": "text",
-        "from": {"data": "details_data"},
-        "interactive": false,
-        "encode": {
-          "enter": {
-            "text": {"signal": "datum['year']"},
-            "fill": {"value": "#000"},
-            "font": {"signal": "font"},
-            "fontSize": {"signal": "0.15*(_width < _height ? width : height)"},
-            "align": {"value": "center"},
-            "x": {"signal": "width/2"},
-            "y": {"signal": "height/2-(milestoneRadius*k)*0.5"},
-            "fillOpacity": {"value": 0.65},
-            "baseline": {"value": "bottom"},
-            "opacity": {"value": 0}
-          },
-          "update": {
-            "opacity": {
-              "signal": "!showDetails ? 0 : tEaseDelayed * labelFontOpacity"
-            }
-          }
-        }
-      },
-      {
-        "name": "details_desecription",
-        "details": "Wrapped text that further describes the user-selected node (appears on zoom)",
-        "type": "text",
-        "from": {"data": "details_COE"},
-        "interactive": false,
-        "encode": {
-          "enter": {
-            "text": {"field": "line"},
-            "fill": {"value": "#000"},
-            "font": {"signal": "font"},
-            "fontSize": {"field": "fontSize"},
-            "align": {"value": "center"},
-            "x": {"signal": "width/2"},
-            "y": {
-              "signal": "data('details_title')[0]['bounds']['y2']+(0.1*milestoneRadius*k)+datum['y']"
-            },
-            "baseline": {"value": "top"},
-            "fillOpacity": {"value": 0.65},
-            "opacity": {"value": 0}
-          },
-          "update": {"opacity": {"signal": "!showDetails ? 0 : tEaseDelayed"}}
-        }
-      },
-      {
-        "name": "details_flag_image",
-        "details": "Pan African flag (appears on zoom)",
-        "type": "image",
-        "interactive": false,
-        "encode": {
-          "enter": {
-            "url": {
-              "value": "https://raw.githubusercontent.com/Giammaria/Du-Bois-DVS-challenge/main/2024/challenge-02/_artifacts/pan-african-flag-grunge.png"
-            },
-            "fillOpacity": {"value": 0.25},
-            "opacity": {"value": 0}
-          },
-          "update": {
-            "opacity": {"signal": "!showDetails ? 0 : tEaseDelayed"},
-            "x": {"signal": "width/2-width/6"},
-            "width": {"signal": "width/3"},
-            "y": {"signal": "showDetails ? height*0.60 : 0"}
-          }
-        }
-      },
-      {
-        "type": "group",
-        "name": "footer_group",
-        "description": "The group of marks located at the bottom of the canvas that provide additional information about the visual",
-        "marks": [
-          {
-            "name": "footer_prefix_text",
-            "description": "The labels for each footer item",
-            "type": "text",
-            "from": {"data": "footer"},
-            "interactive": false,
-            "encode": {
-              "update": {
-                "opacity": {"value": 1},
-                "fill": {"signal": "'#888'"},
-                "font": {"signal": "font"},
-                "fontWeight": {"value": 100},
-                "fontSize": {"value": 10},
-                "baseline": {"value": "middle"},
-                "x": {"signal": "0"},
-                "y": {
-                  "signal": "lerp([scale('yScaleFooter', datum['id'])*k0,scale('yScaleFooter', datum['id'])*k], tEase)"
-                },
-                "text": {"signal": "datum['text'][0]"}
-              }
-            }
-          },
-          {
-            "name": "footer_href_text",
-            "description": "The hyperlinks for each footer item",
-            "type": "text",
-            "from": {"data": "footer"},
-            "encode": {
-              "update": {
-                "opacity": {"value": 0.65},
-                "fill": {"signal": "'#333'"},
-                "font": {"signal": "font"},
-                "fontWeight": {"value": 600},
-                "fontSize": {"value": 10},
-                "baseline": {"value": "middle"},
-                "x": {
-                  "signal": "data('footer_prefix_text')[0]['bounds']['x2']+5"
-                },
-                "y": {
-                  "signal": "lerp([scale('yScaleFooter', datum['id'])*k0,scale('yScaleFooter', datum['id'])*k], tEase)"
-                },
-                "text": {"signal": "datum['text'][1]"},
-                "href": {"field": "href"},
-                "cursor": {"value": "pointer"},
-                "tooltip": {"field": "href"}
+        {
+          "name": "footer_href_text",
+          "description": "The hyperlinks for each footer item",
+          "type": "text",
+          "from": {"data": "footer"},
+          "encode": {
+            "update": {
+              "opacity": {"value": 0.65},
+              "fill": {"signal": "'#333'"},
+              "font": {"signal": "font"},
+              "fontWeight": {"value": 600},
+              "fontSize": {"value": 10},
+              "baseline": {"value": "middle"},
+              "x": {
+                "signal": "data('footer_prefix_text')[0]['bounds']['x2']+5"
               },
-              "hover": {"opacity": {"value": 1}}
-            }
+              "y": {
+                "signal": "lerp([scale('yScaleFooter', datum['id'])*k0,scale('yScaleFooter', datum['id'])*k], tEase)"
+              },
+              "text": {"signal": "datum['text'][1]"},
+              "href": {"field": "href"},
+              "cursor": {"value": "pointer"},
+              "tooltip": {"field": "href"}
+            },
+            "hover": {"opacity": {"value": 1}}
           }
-        ]
-      }
-    ],
-    "scales": [
-      {
-        "name": "x",
-        "type": "linear",
-        "domain": [0, 1],
-        "range": [{"signal": "width*0.3"}, {"signal": "width*0.7"}],
-        "reverse": true,
-        "domainMax": 0.03,
-        "domainMin": 0,
-        "clamp": true,
-        "zero": true
-      },
-      {
-        "name": "y",
-        "type": "linear",
-        "domain": [
-          {"signal": "extent(pluck(data('freedom'), 'Year'))[0]"},
-          {"signal": "extent(pluck(data('freedom'), 'Year'))[1]"}
-        ],
-        "domainMin": {"signal": "extent(pluck(data('freedom'), 'Year'))[0]"},
-        "domainMax": {"signal": "extent(pluck(data('freedom'), 'Year'))[1]"},
-        "range": [0, {"signal": "height-100"}]
-      },
-      {
-        "name": "color",
-        "type": "ordinal",
-        "range": ["#161512", "#C72E4C"],
-        "domain": {"data": "freedom_stack", "field": "key"}
-      },
-      {
-        "name": "yScaleFooter",
-        "type": "band",
-        "domain": {"data": "footer", "field": "id"},
-        "range": [
-          {"signal": "height+20"},
-          {"signal": "height+30+length(data('footer'))*11"}
-        ]
-      }
-    ],
-    "data": [
-      {
-        "name": "freedom",
-        "url": "https://raw.githubusercontent.com/Giammaria/Du-Bois-DVS-challenge/main/2024/challenge-02/data/data.csv",
-        "format": {"type": "csv", "parse": "auto"}
-      },
-      {
-        "name": "x_axis",
-        "values": [
-          {"value": 0},
-          {"value": 0.01},
-          {"value": 0.02},
-          {"value": 0.03}
-        ],
-        "transform": [
-          {
-            "type": "formula",
-            "expr": "datum['value'] > 0 ? [format(datum['value'], '0.0%'), '|'] : ['','|']",
-            "as": "label"
-          },
-          {"type": "formula", "expr": "scale('x', datum['value'])", "as": "x"},
-          {"type": "formula", "expr": "-11.5", "as": "y"}
-        ]
-      },
-      {
-        "name": "y_axis",
-        "source": "freedom",
-        "transform": [
-          {"type": "formula", "expr": "range('x')[1]", "as": "x"},
-          {"type": "formula", "expr": "-37.5", "as": "dx"},
-          {"type": "formula", "expr": "scale('y', datum['Year'])", "as": "y"},
-          {"type": "filter", "expr": "datum['Year']%10===0"}
-        ]
-      },
-      {
-        "name": "labels_title",
-        "values": [{}],
-        "transform": [
-          {
-            "type": "formula",
-            "expr": "['PERCENT', 'OF', 'FREE NEGROES']",
-            "as": "title"
-          },
-          {"type": "formula", "expr": "range('x')[0]+30", "as": "x"},
-          {"type": "formula", "expr": "-20", "as": "y"}
-        ]
-      },
-      {
-        "name": "labels",
-        "source": "freedom",
-        "transform": [
-          {
-            "type": "joinaggregate",
-            "ops": ["min", "max"],
-            "fields": ["Year", "Year"],
-            "as": ["minYear", "maxYear"]
-          },
-          {
-            "type": "formula",
-            "expr": "+format(datum['Slave']/100, '0.03f')",
-            "as": "Slave"
-          },
-          {
-            "type": "formula",
-            "expr": "+format(datum['Free']/100, '0.03f')",
-            "as": "Free"
-          },
-          {
-            "type": "formula",
-            "expr": "datum['Year']%10===0 ? format(100*datum['Free'], (datum['Free'] === 1 ? '.0f' : '.1f'))+(datum['Year'] === datum['minYear'] || datum['Year'] === datum['maxYear'] ? '%' : '') : ''",
-            "as": "freeLabel"
-          },
-          {"type": "formula", "expr": "range('x')[0]", "as": "x"},
-          {"type": "formula", "expr": "20", "as": "dx"},
-          {"type": "formula", "expr": "2", "as": "dy"},
-          {"type": "formula", "expr": "scale('y', datum['Year'])", "as": "y"},
-          {"type": "filter", "expr": "datum['Year']%10===0"}
-        ]
-      },
-      {
-        "name": "freedom_stack",
-        "source": "freedom",
-        "transform": [
-          {"type": "project", "fields": ["Year", "Slave", "Free"]},
-          {
-            "type": "formula",
-            "expr": "datum['Free']+datum['Slave']",
-            "as": "Slave"
-          },
-          {"type": "fold", "fields": ["Slave", "Free"]},
-          {
-            "type": "project",
-            "fields": ["Year", "key", "value"],
-            "as": ["year", "key", "value"]
-          },
-          {
-            "type": "formula",
-            "expr": "indexof(['Free','Slave'], datum['key'])",
-            "as": "sort"
-          },
-          {
-            "type": "stack",
-            "groupby": ["year"],
-            "field": "value",
-            "sort": {"field": ["sort"], "order": ["ascending"]},
-            "offset": "normalize",
-            "as": ["x0", "x1"]
-          },
-          {"type": "formula", "expr": "scale('x', datum['x0'])", "as": "x0"},
-          {"type": "formula", "expr": "scale('x', datum['x1'])", "as": "x1"},
-          {"type": "formula", "expr": "scale('y', datum['year'])", "as": "y"}
-        ]
-      },
-      {
-        "name": "area_break",
-        "source": "freedom",
-        "transform": [
-          {"type": "project", "fields": ["Year"]},
-          {
-            "type": "window",
-            "ops": ["lead"],
-            "fields": ["Year"],
-            "as": ["leadYear"]
-          },
-          {
-            "type": "formula",
-            "expr": "datum['leadYear'] || datum['Year']",
-            "as": "leadYear"
-          },
-          {
-            "type": "formula",
-            "expr": "sequence(0, 365*(datum['leadYear']-datum['Year'])+1, 300)",
-            "as": "yearPercentage"
-          },
-          {"type": "flatten", "fields": ["yearPercentage"]},
-          {
-            "type": "formula",
-            "expr": "datum['yearPercentage']/365",
-            "as": "yearPercentage"
-          },
-          {
-            "type": "formula",
-            "expr": "datum['Year']+floor(datum['yearPercentage'])",
-            "as": "Year"
-          },
-          {
-            "type": "formula",
-            "expr": "datum['yearPercentage']%1",
-            "as": "yearPercentage"
-          },
-          {
-            "type": "formula",
-            "expr": "datum['Year']+(datum['yearPercentage'])",
-            "as": "Year"
-          },
-          {
-            "type": "formula",
-            "expr": "0.03-(random()*(random() > 0.35 ? 0.00125 : 0.0025))",
-            "as": "jitter"
-          },
-          {"type": "formula", "expr": "scale('y', datum['Year'])", "as": "y"},
-          {"type": "formula", "expr": "scale('x', 1)", "as": "x"},
-          {"type": "formula", "expr": "scale('x', datum['jitter'])", "as": "x2"},
-          {"type": "filter", "expr": "datum['Year'] <= domain('y')[1]-0.25"}
-        ]
-      },
-      {
-        "name": "milestones",
-        "url": "https://raw.githubusercontent.com/Giammaria/Du-Bois-DVS-challenge/main/2024/challenge-02/data/milestones.csv",
-        "format": {"type": "csv", "parse": "auto"},
-        "transform": [
-          {"type": "window", "ops": ["row_number"], "as": ["index"]},
-          {"type": "formula", "expr": "range('x')[1]+yDomainOffset", "as": "x2"},
-          {
-            "type": "formula",
-            "expr": "datum['x2'] + (datum['index']%2===0 ? -20 : -10)",
-            "as": "x"
-          },
-          {"type": "formula", "expr": "scale('y', datum['year'])", "as": "y"}
-        ]
-      },
-      {
-        "name": "y_axis_ticks",
-        "source": "freedom",
-        "transform": [
-          {"type": "formula", "expr": "range('x')[1]+yDomainOffset", "as": "x"},
-          {"type": "formula", "expr": "datum['x']+10", "as": "x2"},
-          {"type": "formula", "expr": "scale('y', datum['Year'])", "as": "y"},
-          {"type": "filter", "expr": "datum['Year']%10===0"}
-        ]
-      },
-      {
-        "name": "milestone_domain",
-        "source": "milestones",
-        "transform": [
-          {"type": "formula", "expr": "scale('y', datum['year'])", "as": "y"},
-          {"type": "joinaggregate", "ops": ["min", "max"], "fields": ["y", "y"]},
-          {"type": "filter", "expr": "datum['y'] === datum['min_y']"},
-          {
-            "type": "project",
-            "fields": ["x2", "min_y", "max_y"],
-            "as": ["x", "y", "y2"]
-          },
-          {
-            "type": "formula",
-            "expr": "max(datum['y2'], range('y')[1])",
-            "as": "y2"
-          },
-          {"type": "formula", "expr": "datum['x']-0.25", "as": "x"},
-          {"type": "formula", "expr": "datum['x']+0.25", "as": "x2"}
-        ]
-      },
-      {
-        "name": "focus0",
-        "on": [{"trigger": "focus", "remove": false, "insert": "focus"}],
-        "transform": [
-          {
-            "type": "window",
-            "ops": ["row_number"],
-            "sort": {"field": "timestamp", "order": "descending"},
-            "as": ["subIndex"]
-          },
-          {
-            "type": "joinaggregate",
-            "ops": ["max"],
-            "fields": ["subIndex"],
-            "as": ["maxSubIndex"]
-          },
-          {
-            "type": "filter",
-            "expr": "datum['maxSubIndex'] === 1 ? true : datum['subIndex'] === 2"
-          }
-        ]
-      },
-      {
-        "name": "footer",
-        "values": [
-          {
-            "id": 1,
-            "text": [
-              "Data Source:",
-              "github.com/ajstarks/dubois-data-portraits/"
-            ],
-            "href": "https://github.com/ajstarks/dubois-data-portraits/tree/master/challenge/2024/challenge02"
-          },
-          {
-            "id": 2,
-            "text": [
-              "Flag Image:",
-              "https://vectorflags.com/pan-african-flag/org-paf-grunge-01"
-            ],
-            "href": "https://vectorflags.com/pan-african-flag/org-paf-grunge-01"
-          },
-          {
-            "id": 3,
-            "text": ["Original:", "Slave and Free Negroes"],
-            "href": "https://github.com/Giammaria/Du-Bois-DVS-challenge/blob/main/2024/challenge-02/_artifacts/original-plate-12.jpg"
-          },
-          {
-            "id": 4,
-            "text": ["Challenge:", "2024 Du Bois Visualization Challenge"],
-            "href": "https://www.datavisualizationsociety.org/news/2024/2/2/advance-your-data-viz-skills-with-the-weekly-2024-du-bois-visualization-challenge"
-          },
-          {
-            "id": 5,
-            "text": ["Emulated By:", "Madison Giammaria"],
-            "href": "https://www.linkedin.com/in/madison-giammaria-58463b33"
-          }
-        ]
-      },
-      {
-        "name": "details_data",
-        "source": "milestones",
-        "transform": [
-          {
-            "type": "filter",
-            "expr": "datum['index'] === focus['index'] && showDetails"
-          }
-        ]
-      },
-      {
-        "name": "details_COE",
-        "source": "details_data",
-        "transform": [
-          {
-            "type": "filter",
-            "expr": "datum['index'] === focus['index'] && showDetails"
-          },
-          {
-            "type": "formula",
-            "expr": "(0.055*(1.5*milestoneRadius*k))",
-            "as": "fontSize"
-          },
-          {
-            "type": "formula",
-            "expr": "((7/12)*datum['fontSize'])",
-            "as": "label_character_width"
-          },
-          {
-            "type": "formula",
-            "expr": "(2*milestoneRadius*k)*1",
-            "as": "line_allowable_width"
-          },
-          {
-            "type": "formula",
-            "expr": "split(datum['description'], ' ')",
-            "as": "word_array"
-          },
-          {"type": "flatten", "fields": ["word_array"], "as": ["word"]},
-          {"type": "window", "ops": ["row_number"], "as": ["word_index"]},
-          {
-            "type": "formula",
-            "expr": "datum['word_index']-1",
-            "as": "word_index"
-          },
-          {
-            "type": "formula",
-            "expr": "length(datum['word'])",
-            "as": "word_length"
-          },
-          {
-            "type": "formula",
-            "expr": "datum['word_length']*datum['label_character_width']",
-            "as": "word_width"
-          },
-          {
-            "type": "window",
-            "ops": ["sum"],
-            "fields": ["word_width"],
-            "as": ["word_width_running_sum"]
-          },
-          {
-            "type": "formula",
-            "expr": "datum['word_width_running_sum']+(datum['word_index']*datum['label_character_width'])",
-            "as": "word_width_running_sum_with_spaces"
-          },
-          {
-            "type": "formula",
-            "expr": "ceil(datum['word_width_running_sum_with_spaces']/(datum['line_allowable_width']))",
-            "as": "line_index"
-          },
-          {
-            "type": "window",
-            "ops": ["sum"],
-            "fields": ["word_length"],
-            "groupby": ["line_index"],
-            "as": ["word_length_running_sum"]
-          },
-          {
-            "type": "joinaggregate",
-            "ops": ["count"],
-            "groupby": ["line_index"],
-            "as": ["word_count_per_line"]
-          },
-          {
-            "type": "window",
-            "ops": ["max"],
-            "fields": ["word_length_running_sum"],
-            "groupby": ["line_index"],
-            "frame": [null, null],
-            "as": ["line_character_length"]
-          },
-          {
-            "type": "formula",
-            "expr": "datum['line_character_length']+(datum['word_count_per_line']-1)",
-            "as": "line_character_length"
-          },
-          {
-            "type": "aggregate",
-            "ops": ["mean"],
-            "fields": ["line_index"],
-            "groupby": [
-              "description",
-              "fontSize",
-              "line_allowable_width",
-              "word_array",
-              "line_index",
-              "line_character_length"
-            ]
-          },
-          {
-            "type": "window",
-            "ops": ["lag"],
-            "fields": ["line_character_length"],
-            "as": ["last_character_length"]
-          },
-          {
-            "type": "formula",
-            "expr": "datum['last_character_length'] ? datum['last_character_length']+1 : 0",
-            "as": "arr_start_index"
-          },
-          {
-            "type": "window",
-            "ops": ["sum"],
-            "fields": ["arr_start_index"],
-            "as": ["arr_start_index"]
-          },
-          {
-            "type": "formula",
-            "expr": "datum['arr_start_index']+datum['line_character_length']",
-            "as": "arr_end_index"
-          },
-          {
-            "type": "formula",
-            "expr": "slice(datum['description'], datum['arr_start_index'], datum['arr_end_index'])",
-            "as": "line"
-          },
-          {
-            "type": "joinaggregate",
-            "ops": ["max"],
-            "fields": ["line_index"],
-            "as": ["lines"]
-          },
-          {
-            "type": "formula",
-            "expr": "datum['fontSize']*1.075",
-            "as": "line_height"
-          },
-          {
-            "type": "formula",
-            "expr": "datum['line_height']*(datum['line_index']-1)",
-            "as": "y"
-          }
-        ]
-      }
-    ]
-  } 
+        }
+      ]
+    }
+  ],
+  "scales": [
+    {
+      "name": "x",
+      "type": "linear",
+      "domain": [0, 1],
+      "range": [{"signal": "width*0.3"}, {"signal": "width*0.7"}],
+      "reverse": true,
+      "domainMax": 0.03,
+      "domainMin": 0,
+      "clamp": true,
+      "zero": true
+    },
+    {
+      "name": "y",
+      "type": "linear",
+      "domain": [
+        {"signal": "extent(pluck(data('freedom'), 'Year'))[0]"},
+        {"signal": "extent(pluck(data('freedom'), 'Year'))[1]"}
+      ],
+      "domainMin": {"signal": "extent(pluck(data('freedom'), 'Year'))[0]"},
+      "domainMax": {"signal": "extent(pluck(data('freedom'), 'Year'))[1]"},
+      "range": [0, {"signal": "height-100"}]
+    },
+    {
+      "name": "color",
+      "type": "ordinal",
+      "range": ["#161512", "#C72E4C"],
+      "domain": {"data": "freedom_stack", "field": "key"}
+    },
+    {
+      "name": "yScaleFooter",
+      "type": "band",
+      "domain": {"data": "footer", "field": "id"},
+      "range": [
+        {"signal": "height+20"},
+        {"signal": "height+30+length(data('footer'))*11"}
+      ]
+    }
+  ],
+  "data": [
+    {
+      "name": "freedom",
+      "url": "https://raw.githubusercontent.com/Giammaria/Du-Bois-DVS-challenge/main/2024/challenge-02/data/data.csv",
+      "format": {"type": "csv", "parse": "auto"}
+    },
+    {
+      "name": "x_axis",
+      "values": [
+        {"value": 0},
+        {"value": 0.01},
+        {"value": 0.02},
+        {"value": 0.03}
+      ],
+      "transform": [
+        {
+          "type": "formula",
+          "expr": "datum['value'] > 0 ? [format(datum['value'], '0.0%'), '|'] : ['','|']",
+          "as": "label"
+        },
+        {"type": "formula", "expr": "scale('x', datum['value'])", "as": "x"},
+        {"type": "formula", "expr": "-11.5", "as": "y"}
+      ]
+    },
+    {
+      "name": "y_axis",
+      "source": "freedom",
+      "transform": [
+        {"type": "formula", "expr": "range('x')[1]", "as": "x"},
+        {"type": "formula", "expr": "-37.5", "as": "dx"},
+        {"type": "formula", "expr": "scale('y', datum['Year'])", "as": "y"},
+        {"type": "filter", "expr": "datum['Year']%10===0"}
+      ]
+    },
+    {
+      "name": "labels_title",
+      "values": [{}],
+      "transform": [
+        {
+          "type": "formula",
+          "expr": "['PERCENT', 'OF', 'FREE NEGROES']",
+          "as": "title"
+        },
+        {"type": "formula", "expr": "range('x')[0]+30", "as": "x"},
+        {"type": "formula", "expr": "-20", "as": "y"}
+      ]
+    },
+    {
+      "name": "labels",
+      "source": "freedom",
+      "transform": [
+        {
+          "type": "joinaggregate",
+          "ops": ["min", "max"],
+          "fields": ["Year", "Year"],
+          "as": ["minYear", "maxYear"]
+        },
+        {
+          "type": "formula",
+          "expr": "+format(datum['Slave']/100, '0.03f')",
+          "as": "Slave"
+        },
+        {
+          "type": "formula",
+          "expr": "+format(datum['Free']/100, '0.03f')",
+          "as": "Free"
+        },
+        {
+          "type": "formula",
+          "expr": "datum['Year']%10===0 ? format(100*datum['Free'], (datum['Free'] === 1 ? '.0f' : '.1f'))+(datum['Year'] === datum['minYear'] || datum['Year'] === datum['maxYear'] ? '%' : '') : ''",
+          "as": "freeLabel"
+        },
+        {"type": "formula", "expr": "range('x')[0]", "as": "x"},
+        {"type": "formula", "expr": "20", "as": "dx"},
+        {"type": "formula", "expr": "2", "as": "dy"},
+        {"type": "formula", "expr": "scale('y', datum['Year'])", "as": "y"},
+        {"type": "filter", "expr": "datum['Year']%10===0"}
+      ]
+    },
+    {
+      "name": "freedom_stack",
+      "source": "freedom",
+      "transform": [
+        {"type": "project", "fields": ["Year", "Slave", "Free"]},
+        {
+          "type": "formula",
+          "expr": "datum['Free']+datum['Slave']",
+          "as": "Slave"
+        },
+        {"type": "fold", "fields": ["Slave", "Free"]},
+        {
+          "type": "project",
+          "fields": ["Year", "key", "value"],
+          "as": ["year", "key", "value"]
+        },
+        {
+          "type": "formula",
+          "expr": "indexof(['Free','Slave'], datum['key'])",
+          "as": "sort"
+        },
+        {
+          "type": "stack",
+          "groupby": ["year"],
+          "field": "value",
+          "sort": {"field": ["sort"], "order": ["ascending"]},
+          "offset": "normalize",
+          "as": ["x0", "x1"]
+        },
+        {"type": "formula", "expr": "scale('x', datum['x0'])", "as": "x0"},
+        {"type": "formula", "expr": "scale('x', datum['x1'])", "as": "x1"},
+        {"type": "formula", "expr": "scale('y', datum['year'])", "as": "y"}
+      ]
+    },
+    {
+      "name": "area_break",
+      "source": "freedom",
+      "transform": [
+        {"type": "project", "fields": ["Year"]},
+        {
+          "type": "window",
+          "ops": ["lead"],
+          "fields": ["Year"],
+          "as": ["leadYear"]
+        },
+        {
+          "type": "formula",
+          "expr": "datum['leadYear'] || datum['Year']",
+          "as": "leadYear"
+        },
+        {
+          "type": "formula",
+          "expr": "sequence(0, 365*(datum['leadYear']-datum['Year'])+1, 300)",
+          "as": "yearPercentage"
+        },
+        {"type": "flatten", "fields": ["yearPercentage"]},
+        {
+          "type": "formula",
+          "expr": "datum['yearPercentage']/365",
+          "as": "yearPercentage"
+        },
+        {
+          "type": "formula",
+          "expr": "datum['Year']+floor(datum['yearPercentage'])",
+          "as": "Year"
+        },
+        {
+          "type": "formula",
+          "expr": "datum['yearPercentage']%1",
+          "as": "yearPercentage"
+        },
+        {
+          "type": "formula",
+          "expr": "datum['Year']+(datum['yearPercentage'])",
+          "as": "Year"
+        },
+        {
+          "type": "formula",
+          "expr": "0.03-(random()*(random() > 0.35 ? 0.00125 : 0.0025))",
+          "as": "jitter"
+        },
+        {"type": "formula", "expr": "scale('y', datum['Year'])", "as": "y"},
+        {"type": "formula", "expr": "scale('x', 1)", "as": "x"},
+        {"type": "formula", "expr": "scale('x', datum['jitter'])", "as": "x2"},
+        {"type": "filter", "expr": "datum['Year'] <= domain('y')[1]-0.25"}
+      ]
+    },
+    {
+      "name": "milestones",
+      "url": "https://raw.githubusercontent.com/Giammaria/Du-Bois-DVS-challenge/main/2024/challenge-02/data/milestones.csv",
+      "format": {"type": "csv", "parse": "auto"},
+      "transform": [
+        {"type": "window", "ops": ["row_number"], "as": ["index"]},
+        {"type": "formula", "expr": "range('x')[1]+yDomainOffset", "as": "x2"},
+        {
+          "type": "formula",
+          "expr": "datum['x2'] + (datum['index']%2===0 ? -20 : -10)",
+          "as": "x"
+        },
+        {"type": "formula", "expr": "scale('y', datum['year'])", "as": "y"}
+      ]
+    },
+    {
+      "name": "y_axis_ticks",
+      "source": "freedom",
+      "transform": [
+        {"type": "formula", "expr": "range('x')[1]+yDomainOffset", "as": "x"},
+        {"type": "formula", "expr": "datum['x']+10", "as": "x2"},
+        {"type": "formula", "expr": "scale('y', datum['Year'])", "as": "y"},
+        {"type": "filter", "expr": "datum['Year']%10===0"}
+      ]
+    },
+    {
+      "name": "milestone_domain",
+      "source": "milestones",
+      "transform": [
+        {"type": "formula", "expr": "scale('y', datum['year'])", "as": "y"},
+        {"type": "joinaggregate", "ops": ["min", "max"], "fields": ["y", "y"]},
+        {"type": "filter", "expr": "datum['y'] === datum['min_y']"},
+        {
+          "type": "project",
+          "fields": ["x2", "min_y", "max_y"],
+          "as": ["x", "y", "y2"]
+        },
+        {
+          "type": "formula",
+          "expr": "max(datum['y2'], range('y')[1])",
+          "as": "y2"
+        },
+        {"type": "formula", "expr": "datum['x']-0.25", "as": "x"},
+        {"type": "formula", "expr": "datum['x']+0.25", "as": "x2"}
+      ]
+    },
+    {
+      "name": "focus0",
+      "on": [{"trigger": "focus", "remove": false, "insert": "focus"}],
+      "transform": [
+        {
+          "type": "window",
+          "ops": ["row_number"],
+          "sort": {"field": "timestamp", "order": "descending"},
+          "as": ["subIndex"]
+        },
+        {
+          "type": "joinaggregate",
+          "ops": ["max"],
+          "fields": ["subIndex"],
+          "as": ["maxSubIndex"]
+        },
+        {
+          "type": "filter",
+          "expr": "datum['maxSubIndex'] === 1 ? true : datum['subIndex'] === 2"
+        }
+      ]
+    },
+    {
+      "name": "footer",
+      "values": [
+        {
+          "id": 1,
+          "text": [
+            "Data Source:",
+            "github.com/ajstarks/dubois-data-portraits/"
+          ],
+          "href": "https://github.com/ajstarks/dubois-data-portraits/tree/master/challenge/2024/challenge02"
+        },
+        {
+          "id": 2,
+          "text": [
+            "Flag Image:",
+            "https://vectorflags.com/pan-african-flag/org-paf-grunge-01"
+          ],
+          "href": "https://vectorflags.com/pan-african-flag/org-paf-grunge-01"
+        },
+        {
+          "id": 3,
+          "text": ["Original:", "Slave and Free Negroes"],
+          "href": "https://github.com/Giammaria/Du-Bois-DVS-challenge/blob/main/2024/challenge-02/_artifacts/original-plate-12.jpg"
+        },
+        {
+          "id": 4,
+          "text": ["Challenge:", "2024 Du Bois Visualization Challenge"],
+          "href": "https://www.datavisualizationsociety.org/news/2024/2/2/advance-your-data-viz-skills-with-the-weekly-2024-du-bois-visualization-challenge"
+        },
+        {
+          "id": 5,
+          "text": ["Emulated By:", "Madison Giammaria"],
+          "href": "https://www.linkedin.com/in/madison-giammaria-58463b33"
+        }
+      ]
+    },
+    {
+      "name": "details_data",
+      "source": "milestones",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "datum['index'] === focus['index'] && showDetails"
+        }
+      ]
+    },
+    {
+      "name": "details_COE",
+      "source": "details_data",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "datum['index'] === focus['index'] && showDetails"
+        },
+        {
+          "type": "formula",
+          "expr": "(0.055*(1.5*milestoneRadius*k))",
+          "as": "fontSize"
+        },
+        {
+          "type": "formula",
+          "expr": "((7/12)*datum['fontSize'])",
+          "as": "label_character_width"
+        },
+        {
+          "type": "formula",
+          "expr": "(2*milestoneRadius*k)*1",
+          "as": "line_allowable_width"
+        },
+        {
+          "type": "formula",
+          "expr": "split(datum['description'], ' ')",
+          "as": "word_array"
+        },
+        {"type": "flatten", "fields": ["word_array"], "as": ["word"]},
+        {"type": "window", "ops": ["row_number"], "as": ["word_index"]},
+        {
+          "type": "formula",
+          "expr": "datum['word_index']-1",
+          "as": "word_index"
+        },
+        {
+          "type": "formula",
+          "expr": "length(datum['word'])",
+          "as": "word_length"
+        },
+        {
+          "type": "formula",
+          "expr": "datum['word_length']*datum['label_character_width']",
+          "as": "word_width"
+        },
+        {
+          "type": "window",
+          "ops": ["sum"],
+          "fields": ["word_width"],
+          "as": ["word_width_running_sum"]
+        },
+        {
+          "type": "formula",
+          "expr": "datum['word_width_running_sum']+(datum['word_index']*datum['label_character_width'])",
+          "as": "word_width_running_sum_with_spaces"
+        },
+        {
+          "type": "formula",
+          "expr": "ceil(datum['word_width_running_sum_with_spaces']/(datum['line_allowable_width']))",
+          "as": "line_index"
+        },
+        {
+          "type": "window",
+          "ops": ["sum"],
+          "fields": ["word_length"],
+          "groupby": ["line_index"],
+          "as": ["word_length_running_sum"]
+        },
+        {
+          "type": "joinaggregate",
+          "ops": ["count"],
+          "groupby": ["line_index"],
+          "as": ["word_count_per_line"]
+        },
+        {
+          "type": "window",
+          "ops": ["max"],
+          "fields": ["word_length_running_sum"],
+          "groupby": ["line_index"],
+          "frame": [null, null],
+          "as": ["line_character_length"]
+        },
+        {
+          "type": "formula",
+          "expr": "datum['line_character_length']+(datum['word_count_per_line']-1)",
+          "as": "line_character_length"
+        },
+        {
+          "type": "aggregate",
+          "ops": ["mean"],
+          "fields": ["line_index"],
+          "groupby": [
+            "description",
+            "fontSize",
+            "line_allowable_width",
+            "word_array",
+            "line_index",
+            "line_character_length"
+          ]
+        },
+        {
+          "type": "window",
+          "ops": ["lag"],
+          "fields": ["line_character_length"],
+          "as": ["last_character_length"]
+        },
+        {
+          "type": "formula",
+          "expr": "datum['last_character_length'] ? datum['last_character_length']+1 : 0",
+          "as": "arr_start_index"
+        },
+        {
+          "type": "window",
+          "ops": ["sum"],
+          "fields": ["arr_start_index"],
+          "as": ["arr_start_index"]
+        },
+        {
+          "type": "formula",
+          "expr": "datum['arr_start_index']+datum['line_character_length']",
+          "as": "arr_end_index"
+        },
+        {
+          "type": "formula",
+          "expr": "slice(datum['description'], datum['arr_start_index'], datum['arr_end_index'])",
+          "as": "line"
+        },
+        {
+          "type": "joinaggregate",
+          "ops": ["max"],
+          "fields": ["line_index"],
+          "as": ["lines"]
+        },
+        {
+          "type": "formula",
+          "expr": "datum['fontSize']*1.075",
+          "as": "line_height"
+        },
+        {
+          "type": "formula",
+          "expr": "datum['line_height']*(datum['line_index']-1)",
+          "as": "y"
+        }
+      ]
+    }
+  ]
+}
