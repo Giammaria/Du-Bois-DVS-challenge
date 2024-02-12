@@ -7,7 +7,7 @@ This repository contains my participation in [the Du Bois Data Visualization Soc
 Visit [Github](https://github.com/ajstarks/dubois-data-portraits/blob/master/challenge/2024/README.md) for full details of each week’s challenge, including the 1900 original plates and the corresponding dataset.
 
 ## 2024 Challenge 02
-![](2024/challenge-02/_artifacts/screen-recording.gif)<br>
+![](2024/challenge-02/_artifacts/screen-recording-medium.gif)<br>
 Tool used: [Vega](https://vega.github.io/vega/docs/)
 
 - [See the interactive version in the Vega Editor](https://vega.github.io/editor/#/gist/d29a1f44deaae65dc42cf4ff1d2e8589/spec.json/view)
