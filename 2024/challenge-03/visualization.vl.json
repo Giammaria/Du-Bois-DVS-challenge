@@ -1,0 +1,246 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "description": "Entry for challenge 03 in the 2024 DVS Du Bois Visualization Contest.",
+    "usermeta": {
+      "developedBy": "Madison Giammaria",
+      "LinkedIn": "https://www.linkedin.com/in/madison-giammaria-58463b33",
+      "email": "giammariam@gmail.com"
+    },
+    "padding": 5,
+    "background": "transparent",
+    "title": {
+      "text": {"expr": "['ACRES OF LAND OWNED BY NEGROES.', 'IN GEORGIA.']"},
+      "orient": "top",
+      "anchor": "middle",
+      "font": {"expr": "font"},
+      "fontSize": 14,
+      "offset": -92.5,
+      "dx": {"expr": "backgroundImageXY[0]/2"},
+      "fontWeight": 700,
+      "color": "#666",
+      "zindex": 99
+    },
+    "autosize": "pad",
+    "data": {
+      "name": "data",
+      "url": "https://raw.githubusercontent.com/Giammaria/Du-Bois-DVS-challenge/main/2024/challenge-03/data/data.csv",
+      "format": {"type": "csv", "parse": {"year": "number", "acres": "number"}}
+    },
+    "view": {"stroke": "transparent"},
+    "width": 500,
+    "height": {"step": 21.5},
+    "layer": [
+      {
+        "name": "background_img",
+        "description": "background image to make the visual look like the original plate",
+        "data": {"values": [{}]},
+        "mark": {
+          "type": "image",
+          "stroke": "#F5F5F5",
+          "url": "https://raw.githubusercontent.com/Giammaria/Du-Bois-DVS-challenge/main/2024/challenge-03/_artifacts/background.jpg",
+          "width": {"expr": "width"},
+          "height": {"expr": "height"},
+          "x": {"expr": "0"},
+          "y": {"expr": "height/2-75"},
+          "aspect": true,
+          "align": "left"
+        }
+      },
+      {
+        "name": "info_icon",
+        "description": "an icon that displays more information about the visual on hover",
+        "data": {"values": [{}]},
+        "params": [
+          {
+            "name": "infoMouseover",
+            "select": {"type": "point", "on": "mouseover", "clear": "mouseout"}
+          }
+        ],
+        "mark": {
+          "type": "point",
+          "shape": {"expr": "infoIconPath"},
+          "size": 0.0045,
+          "x": {"expr": "width-20"},
+          "y": -90,
+          "fill": "#666",
+          "stroke": "transparent",
+          "cursor": "pointer",
+          "tooltip": {
+            "expr": "{title: 'Interaction Instructions', 'Hover:': 'Hover over the bars to see the number of acres by year. The first and last years are displayed by default.'}"
+          }
+        }
+      },
+      {
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "field": "year",
+            "axis": {
+              "zindex": 99,
+              "title": null,
+              "domain": false,
+              "ticks": false,
+              "labelPadding": -60,
+              "labelFont": {"expr": "font"},
+              "labelOpacity": {"expr": "labelFontOpacity"},
+              "labelFontSize": {"expr": "labelFontSize"}
+            },
+            "scale": {"paddingInner": 0.35}
+          }
+        },
+        "layer": [
+          {
+            "name": "bars",
+            "mark": {
+              "type": "bar",
+              "color": "#E42C4B",
+              "stroke": "#666",
+              "strokeWidth": {
+                "expr": "length(data('barMouseover_store')) > 0 ? datum['_vgsid_'] === data('barMouseover_store')[0]['_vgsid_'] ? 1 : 0.5 : 0.5"
+              },
+              "fillOpacity": {
+                "expr": "length(data('barMouseover_store')) > 0 ? datum['_vgsid_'] === data('barMouseover_store')[0]['_vgsid_'] ? 1 : 0.35 : 1"
+              }
+            },
+            "params": [
+              {
+                "name": "barMouseover",
+                "select": {
+                  "type": "point",
+                  "on": "mouseover",
+                  "clear": "mouseout",
+                  "nearest": true
+                }
+              }
+            ],
+            "encoding": {
+              "x": {
+                "type": "quantitative",
+                "field": "acres",
+                "axis": null,
+                "stack": false,
+                "scale": {
+                  "rangeMax": {"expr": "width"},
+                  "rangeMin": {"expr": "65"}
+                }
+              }
+            }
+          },
+          {
+            "transform": [
+              {
+                "calculate": "indexof(extent(pluck(data('data'), 'year')), datum['year'])>=0 ? 1 : 0",
+                "as": "opacity"
+              }
+            ],
+            "name": "text",
+            "mark": {
+              "type": "text",
+              "fontWeight": 800,
+              "text": {"expr": "format(round(datum['acres']), ',')"},
+              "fontSize": {"expr": "labelFontSize"},
+              "x": {"expr": "scale('x', datum['acres']/2)"},
+              "opacity": {
+                "expr": "length(data('barMouseover_store')) > 0 ? datum['_vgsid_'] === data('barMouseover_store')[0]['_vgsid_'] ? 1 : 0 : datum['opacity']"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "footer",
+        "encoding": {"y": {"type": "ordinal", "field": "id", "axis": null}},
+        "layer": [
+          {
+            "name": "prefix_text",
+            "mark": {
+              "type": "text",
+              "text": {"expr": "datum['text'][0]"},
+              "dy": {"expr": "height-71"},
+              "align": "left",
+              "dx": {"expr": "-width/2+2"},
+              "fill": "#888",
+              "font": {"expr": "font"},
+              "fontWeight": 100,
+              "fontSize": 10,
+              "baseline": "middle"
+            }
+          },
+          {
+            "name": "href_text",
+            "params": [
+              {
+                "name": "footerHrefMouseover",
+                "select": {
+                  "type": "point",
+                  "on": "mouseover",
+                  "clear": "mouseout"
+                }
+              }
+            ],
+            "mark": {
+              "type": "text",
+              "text": {"expr": "datum['text'][1]"},
+              "dy": {"expr": "height-71"},
+              "align": "left",
+              "dx": {"expr": "-(width/2-70)"},
+              "fill": {"expr": "'#333'"},
+              "font": {"expr": "font"},
+              "fontWeight": 600,
+              "fontSize": 10,
+              "baseline": "middle",
+              "href": {"expr": "datum['href']"},
+              "cursor": "pointer",
+              "tooltip": {"expr": "datum['href']"},
+              "opacity": {
+                "expr": "length(data('barMouseover_store')) > 0 ? datum['_vgsid_'] === data('barMouseover_store')[0]['_vgsid_'] ? 1 : 0.65 : 0.65"
+              }
+            }
+          }
+        ],
+        "data": {
+          "values": [
+            {
+              "id": 1,
+              "text": [
+                "Data Source:",
+                "github.com/ajstarks/dubois-data-portraits/"
+              ],
+              "href": "https://github.com/ajstarks/dubois-data-portraits/blob/master/challenge/2024/challenge03/data.csv"
+            },
+            {
+              "id": 2,
+              "text": ["Original:", "Acres of Land Owned by Negroes in Georgia"],
+              "href": "https://github.com/Giammaria/Du-Bois-DVS-challenge/blob/main/2024/challenge-03/_artifacts/original-plate-19.jpg"
+            },
+            {
+              "id": 3,
+              "text": ["Challenge:", "2024 Du Bois Visualization Challenge"],
+              "href": "https://www.datavisualizationsociety.org/news/2024/2/2/advance-your-data-viz-skills-with-the-weekly-2024-du-bois-visualization-challenge"
+            },
+            {
+              "id": 4,
+              "text": ["Emulated By:", "Madison Giammaria"],
+              "href": "https://www.linkedin.com/in/madison-giammaria-58463b33"
+            }
+          ]
+        },
+        "resolve": {"scale": {"x": "independent", "y": "independent"}}
+      }
+    ],
+    "params": [
+      {"name": "font", "value": "sans-serif"},
+      {"name": "labelFontSize", "value": 12},
+      {"name": "labelFontWeight", "value": 100},
+      {"name": "labelFontOpacity", "value": 0.5},
+      {"name": "yDomainOffset", "value": -50},
+      {"name": "height", "expr": "1.3*width"},
+      {"name": "milestoneRadius", "value": 3.5},
+      {"name": "backgroundImageXY", "expr": "[0,0]"},
+      {"name": "childHeight", "expr": "height"},
+      {
+        "name": "infoIconPath",
+        "value": "M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"
+      }
+    ]
+  }
