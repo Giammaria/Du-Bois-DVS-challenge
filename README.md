@@ -8,7 +8,7 @@ Visit [Github](https://github.com/ajstarks/dubois-data-portraits/blob/master/cha
 
 ## 2024 Challenge 03
 ![](2024/challenge-03/_artifacts/screen-recording-medium.gif)<br>
-Tool used: [Vega](https://vega.github.io/vega/docs/)
+Tool used: [Vega-Lite](https://vega.github.io/vega-lite/)
 
 - [See the interactive version in the Vega Editor](https://vega.github.io/editor/#/gist/01f767da1f5c7c8bb789b7f24c732e9b/spec.json/view)
 - [See the original.](2024/challenge-03/_artifacts/original-plate-19.jpg)
