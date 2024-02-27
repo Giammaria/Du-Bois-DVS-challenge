@@ -1,0 +1,583 @@
+{
+    "$schema": "https://vega.github.io/schema/vega/v5.json",
+    "description": "Entry for challenge 02 in the 2024 DVS Du Bois Visualization Contest.",
+    "usermeta": {
+      "developedBy": "Madison Giammaria",
+      "LinkedIn": "https://www.linkedin.com/in/madison-giammaria-58463b33",
+      "email": "giammariam@gmail.com"
+    },
+    "title": {
+      "text": "THE GEORGIA NEGRO.",
+      "subtitle": {
+        "signal": "['A SOCIAL STUDY', 'BY', 'W.E.BURGHARDT DU BOIS.']"
+      },
+      "orient": "top",
+      "anchor": "middle",
+      "font": {"signal": "font"},
+      "fontSize": 18,
+      "offset": -117,
+      "fontWeight": "800",
+      "color": "#666",
+      "zindex": 99,
+      "subtitleFontSize": 12,
+      "subtitleColor": "#666",
+      "subtitleFontWeight": 600
+    },
+    "width": 400,
+    "padding": 5,
+    "signals": [
+      {
+        "name": "font",
+        "description": "font to be used throught the chart",
+        "value": "sans-serif"
+      },
+      {
+        "name": "earth",
+        "description": "configurations for each earth",
+        "update": "{r: height/5.25, stroke: '#666', fill: '#C8AC95', x: {sphere1: width/4, sphere2: width/2+width/4}, y: height/2.75, scale: height/5.25, rotate: {projection1: [brushedValue+90, 0], projection2: [brushedValue-40, 0]}}"
+      },
+      {"name": "brushDomain", "value": [-180, 180]},
+      {
+        "name": "unit",
+        "description": "used to determine if hovering over an interactive mark or group of marks",
+        "value": {},
+        "on": [
+          {"events": "mousemove", "update": "isTuple(group()) ? group() : unit"}
+        ]
+      },
+      {
+        "name": "brushedValue",
+        "description": "the current rotation associated with the x position on drag",
+        "value": null,
+        "on": [
+          {"events": "dblclick", "update": "0"},
+          {
+            "events": "[@brush_rect:mousedown, window:mouseup] > window:mousemove!",
+            "update": "isValid(unit) && unit !== {} ? clamp(round(invert('brushScale', x(unit))), brushDomain[0], brushDomain[1]) : brushedValue"
+          },
+          {"events": "mouseout", "update": "brushedValue"}
+        ]
+      },
+      {
+        "name": "height",
+        "description": "dynamically adjust the height based on the width",
+        "init": "1.3*width"
+      },
+      {
+        "name": "infoIconPath",
+        "value": "M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"
+      }
+    ],
+    "marks": [
+      {
+        "name": "background_img",
+        "description": "background image to make the visual look like the original plate",
+        "type": "image",
+        "encode": {
+          "enter": {
+            "url": {
+              "value": "https://raw.githubusercontent.com/Giammaria/Du-Bois-DVS-challenge/main/2024/challenge-04/_artifacts/background.jpg"
+            },
+            "x": {"value": -40},
+            "y": {"value": -80},
+            "aspect": {"value": true},
+            "width": {"signal": "width*1.2"}
+          }
+        }
+      },
+      {
+        "name": "info_icon",
+        "description": "an icon that displays more information about the visual on hover",
+        "type": "symbol",
+        "encode": {
+          "enter": {
+            "shape": {"signal": "infoIconPath"},
+            "size": {"value": 0.0045},
+            "x": {"signal": "width+15"},
+            "y": {"signal": "-100"},
+            "fill": {"value": "#666"},
+            "cursor": {"value": "pointer"},
+            "tooltip": {"signal": "{title: 'Interaction Instructions', 'Rotation': 'Click and drag across the maps to rotate horizontally.', 'Reset Rotation': 'Double click while over the maps to reset the horizontal rotation.'}"}
+          }
+        }
+      },
+      {
+        "name": "map_title_1",
+        "type": "text",
+        "encode": {
+          "enter": {
+            "text": {"value": "DISTRIBUTION OF"},
+            "font": {"signal": "font"},
+            "fontSize": {"value": 9},
+            "angle": {"value": 25},
+            "baseline": {"value": "bottom"},
+            "offset": -117,
+            "fill": {"value": "#666"},
+            "x": {"signal": "earth.x.sphere1+10"},
+            "y": {"signal": "earth.y-earth.r-7.5"}
+          }
+        }
+      },
+      {
+        "name": "land_1",
+        "type": "shape",
+        "from": {"data": "countries"},
+        "encode": {
+          "update": {
+            "fill": {"value": "#DEAD7B"},
+            "stroke": {"value": "#DEAD7B"},
+            "strokeWidth": {"value": 1}
+          }
+        },
+        "transform": [{"type": "geoshape", "projection": "projection1"}]
+      },
+      {
+        "name": "land_1.2",
+        "type": "shape",
+        "from": {"data": "land"},
+        "encode": {
+          "update": {"stroke": {"value": "#666"}, "strokeWidth": {"value": 1}}
+        },
+        "transform": [{"type": "geoshape", "projection": "projection1"}]
+      },
+      {
+        "name": "chloropleths_1",
+        "type": "shape",
+        "from": {"data": "chloropleths"},
+        "encode": {
+          "update": {
+            "fill": {"signal": "datum.properties.fill"},
+            "stroke": {"value": "#666"},
+            "strokeWidth": {"value": 1}
+          }
+        },
+        "transform": [{"type": "geoshape", "projection": "projection1"}]
+      },
+      {
+        "name": "lines_1",
+        "type": "shape",
+        "from": {"data": "lines"},
+        "encode": {
+          "update": {"stroke": {"value": "#666"}, "strokeWidth": {"value": 1}}
+        },
+        "transform": [{"type": "geoshape", "projection": "projection1"}]
+      },
+      {
+        "name": "georgia_symbol",
+        "from": {"data": "georgia"},
+        "type": "symbol",
+        "encode": {
+          "update": {
+            "shape": {
+              "value": "M0,.5L.6,.8L.5,.1L1,-.3L.3,-.4L0,-1L-.3,-.4L-1,-.3L-.5,.1L-.6,.8L0,.5Z"
+            },
+            "fill": {"signal": "'#eee'"},
+            "stroke": {"value": "transparent"},
+            "size": {"value": 50},
+            "x": {"field": "x"},
+            "y": {"field": "y"},
+            "opacity": {"signal": "brushedValue >= -80 && brushedValue <=66 ? 1 : 0"}
+          }
+        }
+      },
+      {
+        "name": "sphere_1",
+        "description": "circle for earth 1",
+        "type": "arc",
+        "encode": {
+          "enter": {
+            "x": {"signal": "earth.x.sphere1"},
+            "y": {"signal": "earth.y"},
+            "innerRadius": {"signal": "0"},
+            "outerRadius": {"signal": "earth.r"},
+            "startAngle": {"signal": "0"},
+            "endAngle": {"signal": "2*PI"},
+            "stroke": {"signal": "earth.stroke"},
+            "fill": {"signal": "earth.fill"},
+            "fillOpacity": {"signal": "0.45"}
+          }
+        }
+      },
+      {
+        "name": "map_title_2",
+        "type": "text",
+        "encode": {
+          "enter": {
+            "text": {"value": "THE NEGRO RACE"},
+            "anchor": "middle",
+            "font": {"signal": "font"},
+            "fontSize": {"value": 9},
+            "angle": {"value": 335},
+            "baseline": {"value": "bottom"},
+            "offset": -117,
+            "fill": {"value": "#666"},
+            "x": {"signal": "earth.x.sphere2-earth.r+20"},
+            "y": {"signal": "earth.y-earth.r+25"}
+          }
+        }
+      },
+      {
+        "name": "land_2",
+        "type": "shape",
+        "from": {"data": "countries"},
+        "encode": {
+          "update": {
+            "fill": {"value": "#DEAD7B"},
+            "stroke": {"value": "#DEAD7B"},
+            "strokeWidth": {"value": 1}
+          }
+        },
+        "transform": [{"type": "geoshape", "projection": "projection2"}]
+      },
+      {
+        "name": "land_2.2",
+        "type": "shape",
+        "from": {"data": "land"},
+        "encode": {
+          "update": {"stroke": {"value": "#666"}, "strokeWidth": {"value": 1}}
+        },
+        "transform": [{"type": "geoshape", "projection": "projection2"}]
+      },
+      {
+        "name": "chloropleths_2",
+        "type": "shape",
+        "from": {"data": "chloropleths"},
+        "encode": {
+          "update": {
+            "fill": {"signal": "datum.properties.fill"},
+            "stroke": {"value": "#666"},
+            "strokeWidth": {"value": 1}
+          }
+        },
+        "transform": [{"type": "geoshape", "projection": "projection2"}]
+      },
+      {
+        "name": "lines_2",
+        "type": "shape",
+        "from": {"data": "lines"},
+        "encode": {
+          "update": {"stroke": {"value": "#666"}, "strokeWidth": {"value": 1}}
+        },
+        "transform": [{"type": "geoshape", "projection": "projection2"}]
+      },
+      {
+        "name": "sphere_2",
+        "description": "circle for earth 2",
+        "type": "arc",
+        "encode": {
+          "enter": {
+            "x": {"signal": "earth.x.sphere2"},
+            "y": {"signal": "earth.y"},
+            "innerRadius": {"signal": "0"},
+            "outerRadius": {"signal": "earth.r"},
+            "startAngle": {"signal": "0"},
+            "endAngle": {"signal": "2*PI"},
+            "stroke": {"signal": "earth.stroke"},
+            "fill": {"signal": "earth.fill"},
+            "fillOpacity": {"signal": "0.45"}
+          }
+        }
+      },
+      {
+        "name": "brush_rect",
+        "type": "rect",
+        "encode": {
+          "enter": {
+            "x": {"signal": "-40"},
+            "cursor": {"value": "pointer"},
+            "width": {"signal": "width+80"},
+            "height": {"signal": "earth.r*2"},
+            "y": {"signal": "earth.y-earth.r"},
+            "opacity": {"value": 0}
+          }
+        }
+      },
+      {
+        "type": "group",
+        "name": "key_group",
+        "data": [{}],
+        "description": "the group of marks for the map's key",
+        "encode": {
+          "enter": {
+            "x": {"signal": "width/4.75"},
+            "y": {"signal": "height-height/2.75"}
+          }
+        },
+        "marks": [
+          {
+            "name": "line_key_icon",
+            "type": "text",
+            "encode": {
+              "enter": {
+                "text": {"value": "☰"},
+                "align": {"value": "center"},
+                "fontSize": {"value": 14},
+                "font": {"signal": "font"},
+                "fill": {"signal": "'#666'"}
+              }
+            }
+          },
+          {
+            "name": "line_key_label",
+            "type": "text",
+            "encode": {
+              "enter": {
+                "x": {"value": 25},
+                "dy": {"value": -0.5},
+                "text": {"value": "ROUTES OF THE AFRICAN SLAVE TRADE."},
+                "align": {"value": "left"},
+                "fontSize": {"value": 10},
+                "font": {"signal": "font"},
+                "fill": {"signal": "'#666'"}
+              }
+            }
+          },
+          {
+            "name": "georgia_key_icon",
+            "type": "text",
+            "encode": {
+              "enter": {
+                "y": {"value": 25},
+                "text": {"value": "✪"},
+                "align": {"value": "center"},
+                "fontSize": {"value": 16},
+                "font": {"signal": "font"},
+                "fill": {"signal": "'#666'"},
+                "stroke": {"signal": "'#666'"}
+              }
+            }
+          },
+          {
+            "name": "georgia_key_label",
+            "type": "text",
+            "encode": {
+              "enter": {
+                "x": {"value": 25},
+                "y": {"value": 25},
+                "dy": {"value": -0.5},
+                "text": {"value": "THE STATE OF GEORGIA."},
+                "align": {"value": "left"},
+                "fontSize": {"value": 10},
+                "font": {"signal": "font"},
+                "fill": {"signal": "'#666'"}
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "group",
+        "name": "caption_group",
+        "description": "the group of marks for the map's key",
+        "encode": {
+          "enter": {
+            "x": {"signal": "width/2"},
+            "y": {"signal": "height-height/4.75"}
+          }
+        },
+        "marks": [
+          {
+            "name": "lcaption_text",
+            "type": "text",
+            "encode": {
+              "enter": {
+                "text": {
+                  "signal": "['‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎THIS CASE IS DEVOTED TO A SERIES OF CHARS,MAPS AND OTHER DEV-', 'CES DESIGNED TO ILLUSTRATE THE DEVELOPMENT OF THE AMERICAN NEGRO IN A', 'SINGLE TYPICAL STATE OF THE UNITED STATES.‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎','‎','\" THE PROBLEM OF THE 20TH CENTURY IS THE PROBLEM OF THE', 'COLOR-LINE.\"']"
+                },
+                "align": {"value": "center"},
+                "fontSize": {"value": 10},
+                "font": {"signal": "font"},
+                "fill": {"signal": "'#666'"}
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "group",
+        "name": "footer_group",
+        "description": "The group of marks located at the bottom of the canvas that provide additional information about the visual",
+        "marks": [
+          {
+            "name": "footer_prefix_text",
+            "description": "The labels for each footer item",
+            "type": "text",
+            "from": {"data": "footer"},
+            "interactive": false,
+            "encode": {
+              "update": {
+                "opacity": {"value": 1},
+                "fill": {"signal": "'#888'"},
+                "font": {"signal": "font"},
+                "fontWeight": {"value": 100},
+                "fontSize": {"value": 10},
+                "baseline": {"value": "middle"},
+                "x": {"signal": "0"},
+                "y": {"signal": "scale('yScaleFooter', datum['id'])"},
+                "text": {"signal": "datum['text'][0]"}
+              }
+            }
+          },
+          {
+            "name": "footer_href_text",
+            "description": "The hyperlinks for each footer item",
+            "type": "text",
+            "from": {"data": "footer"},
+            "encode": {
+              "update": {
+                "opacity": {"value": 0.65},
+                "fill": {"signal": "'#333'"},
+                "font": {"signal": "font"},
+                "fontWeight": {"value": 600},
+                "fontSize": {"value": 10},
+                "baseline": {"value": "middle"},
+                "x": {
+                  "signal": "data('footer_prefix_text')[0]['bounds']['x2']+5"
+                },
+                "y": {"signal": "scale('yScaleFooter', datum['id'])"},
+                "text": {"signal": "datum['text'][1]"},
+                "href": {"field": "href"},
+                "cursor": {"value": "pointer"},
+                "tooltip": {"field": "href"}
+              },
+              "hover": {"opacity": {"value": 1}}
+            }
+          }
+        ]
+      }
+    ],
+    "projections": [
+      {
+        "name": "projection1",
+        "scale": {"signal": "earth.scale"},
+        "type": "orthographic",
+        "translate": {"signal": "[earth.x.sphere1, earth.y]"},
+        "rotate": [
+          {"signal": "earth.rotate.projection1[0]"},
+          {"signal": "earth.rotate.projection1[1]"}
+        ]
+      },
+      {
+        "name": "projection2",
+        "scale": {"signal": "earth.scale"},
+        "type": "orthographic",
+        "translate": {"signal": "[earth.x.sphere2, earth.y]"},
+        "rotate": [
+          {"signal": "earth.rotate.projection2[0]"},
+          {"signal": "earth.rotate.projection2[1]"}
+        ]
+      }
+    ],
+    "scales": [
+      {
+        "name": "brushScale",
+        "type": "linear",
+        "domain": {"signal": "brushDomain"},
+        "range": [-40, {"signal": "width+80"}],
+        "clamp": true
+      },
+      {
+        "name": "yScaleFooter",
+        "type": "band",
+        "domain": {"data": "footer", "field": "id"},
+        "range": [
+          {"signal": "height+20"},
+          {"signal": "height+30+length(data('footer'))*11"}
+        ]
+      }
+    ],
+    "data": [
+      {"name": "sphere", "values": [{"type": "Sphere"}]},
+      {
+        "name": "countries",
+        "url": "https://raw.githubusercontent.com/Giammaria/Du-Bois-DVS-challenge/main/2024/challenge-04/data/countries.topojson",
+        "format": {"type": "topojson", "feature": "custom.geo"}
+      },
+      {
+        "name": "land",
+        "url": "https://raw.githubusercontent.com/Giammaria/Du-Bois-DVS-challenge/main/2024/challenge-04/data/land.topojson",
+        "format": {"type": "topojson", "feature": "merged"}
+      },
+      {
+        "name": "chloropleths",
+        "url": "https://raw.githubusercontent.com/Giammaria/Du-Bois-DVS-challenge/main/2024/challenge-04/data/brown_and_black_chloropleths.topojson",
+        "format": {"type": "topojson", "feature": "collection"}
+      },
+      {
+        "name": "georgia",
+        "values": {
+          "type": "Topology",
+          "objects": {
+            "collection": {
+              "type": "GeometryCollection",
+              "geometries": [
+                {
+                  "type": "Point",
+                  "coordinates": [-82.66154008514474, 32.128957752757486]
+                }
+              ]
+            }
+          },
+          "arcs": [],
+          "bbox": [
+            -82.66154008514474,
+            32.128957752757486,
+            -82.66154008514474,
+            32.128957752757486
+          ]
+        },
+        "format": {"type": "topojson", "feature": "collection"},
+        "transform": [
+          {
+            "type": "formula",
+            "expr": "datum['geometry']['coordinates'][0]",
+            "as": "lon"
+          },
+          {
+            "type": "formula",
+            "expr": "datum['geometry']['coordinates'][1]",
+            "as": "lat"
+          },
+          {
+            "type": "geopoint",
+            "projection": "projection1",
+            "fields": ["lon", "lat"],
+            "as": ["x", "y"]
+          }
+        ]
+      },
+      {
+        "name": "lines",
+        "url": "https://raw.githubusercontent.com/Giammaria/Du-Bois-DVS-challenge/main/2024/challenge-04/data/features.topojson",
+        "format": {"type": "topojson", "feature": "collection"}
+      },
+      {
+        "name": "footer",
+        "values": [
+          {
+            "id": 1,
+            "text": [
+              "Data Source:",
+              "github.com/ajstarks/dubois-data-portraits/"
+            ],
+            "href": "https://github.com/ajstarks/dubois-data-portraits/tree/master/challenge/2024/challenge04"
+          },
+          {
+            "id": 2,
+            "text": ["Original:", "The Georgia Negro"],
+            "href": "https://github.com/Giammaria/Du-Bois-DVS-challenge/blob/main/2024/challenge-04/_artifacts/original-plate-01.jpg"
+          },
+          {
+            "id": 4,
+            "text": ["Challenge:", "2024 Du Bois Visualization Challenge"],
+            "href": "https://www.datavisualizationsociety.org/news/2024/2/2/advance-your-data-viz-skills-with-the-weekly-2024-du-bois-visualization-challenge"
+          },
+          {
+            "id": 5,
+            "text": ["Emulated By:", "Madison Giammaria"],
+            "href": "https://www.linkedin.com/in/madison-giammaria-58463b33"
+          }
+        ]
+      }
+    ]
+  }
