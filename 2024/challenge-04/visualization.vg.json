@@ -382,7 +382,7 @@
             "encode": {
               "enter": {
                 "text": {
-                  "signal": "['‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎THIS CASE IS DEVOTED TO A SERIES OF CHARS,MAPS AND OTHER DEV-', 'CES DESIGNED TO ILLUSTRATE THE DEVELOPMENT OF THE AMERICAN NEGRO IN A', 'SINGLE TYPICAL STATE OF THE UNITED STATES.‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎','‎','\" THE PROBLEM OF THE 20TH CENTURY IS THE PROBLEM OF THE', 'COLOR-LINE.\"']"
+                  "signal": "['‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎THIS CASE IS DEVOTED TO A SERIES OF CHARTS,MAPS AND OTHER DEV-', 'CES DESIGNED TO ILLUSTRATE THE DEVELOPMENT OF THE AMERICAN NEGRO IN A', 'SINGLE TYPICAL STATE OF THE UNITED STATES.‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎','‎','\" THE PROBLEM OF THE 20TH CENTURY IS THE PROBLEM OF THE', 'COLOR-LINE.\"']"
                 },
                 "align": {"value": "center"},
                 "fontSize": {"value": 10},
