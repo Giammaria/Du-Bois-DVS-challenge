@@ -1,0 +1,234 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "description": "Entry for challenge 05 in the 2024 DVS Du Bois Visualization Contest.",
+    "usermeta": {
+      "developedBy": "Madison Giammaria",
+      "LinkedIn": "https://www.linkedin.com/in/madison-giammaria-58463b33",
+      "email": "giammariam@gmail.com"
+    },
+    "padding": 5,
+    "background": "transparent",
+    "title": {
+      "text": "RACE AMALGIMATION IN GEORGIA .",
+      "orient": "top",
+      "anchor": "middle",
+      "font": {"expr": "font"},
+      "fontSize": 14,
+      "offset": -75,
+      "dx": {"expr": "backgroundImageXY[0]/2"},
+      "fontWeight": 700,
+      "color": "#444",
+      "zindex": 99,
+      "subtitle": "BASED ON A STUDY OF 40,000 INDIVIDUALS OF NEGRO DESCENT.",
+      "subtitleFontWeight": 200,
+      "subtitleColor": "#888",
+      "subtitlePadding": 5,
+      "subtitleFontSize": 9
+    },
+    "autosize": "pad",
+    "data": {
+      "name": "data",
+      "url": "https://raw.githubusercontent.com/Giammaria/Du-Bois-DVS-challenge/main/2024/challenge-05/data/data.csv",
+      "format": {"type": "csv", "parse": {"Percentage": "number"}}
+    },
+    "transform": [
+      {"calculate": "datum['Percentage']/100", "as": "Percentage"},
+      {
+        "stack": "Percentage",
+        "sort": [{"field": "Category", "order": "ascending"}],
+        "as": ["Percentage_start", "Percentage_end"]
+      },
+      {
+        "calculate": "[['I.E. FULL-BLOODED', 'NEGROES.'], ['I.E. PERSONS WITH', 'SOME WHITE BLOOD', 'OR DESCENDANTS', 'OF LIGHT COLORED', 'AFRICANS.'], ['I.E. PERSONS WITH', 'MORE WHITE THAN', 'NEGRO BLOOD.']][indexof(['Black', 'Brown', 'Yellow'], datum['Category'])]",
+        "as": "description"
+      }
+    ],
+    "view": {"stroke": "transparent"},
+    "width": 500,
+    "layer": [
+      {
+        "name": "background_img",
+        "description": "background image to make the visual look like the original plate",
+        "data": {"values": [{}]},
+        "mark": {
+          "type": "image",
+          "stroke": "#F5F5F5",
+          "url": "https://raw.githubusercontent.com/Giammaria/Du-Bois-DVS-challenge/main/2024/challenge-05/_artifacts/background.jpg",
+          "width": {"expr": "width"},
+          "height": {"expr": "height"},
+          "x": {"expr": "0"},
+          "y": {"expr": "height/2-75"},
+          "aspect": true,
+          "align": "left"
+        }
+      },
+      {
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "field": "Percentage_start",
+            "scale": {"range": [20, {"expr": "height-130"}]},
+            "axis": null
+          },
+          "y2": {"field": "Percentage_end"}
+        },
+        "layer": [
+          {
+            "mark": {
+              "type": "rect",
+              "x": {"expr": "0.45*width"},
+              "x2": {"expr": "0.775*width"},
+              "stroke": {
+                "expr": " ['#111111', '#371E13', '#AAA'][indexof(['Black', 'Brown', 'Yellow'], datum['Category'])]"
+              }
+            },
+            "encoding": {
+              "color": {
+                "type": "nominal",
+                "field": "Category",
+                "sort": {"field": "Category"},
+                "legend": null,
+                "scale": {
+                  "domain": ["Black", "Brown", "Yellow"],
+                  "range": ["#111111", "#371E13", "#F8BC1C"]
+                }
+              }
+            }
+          },
+          {
+            "mark": {
+              "type": "text",
+              "text": {"expr": "format(datum['Percentage'], '.0%')"},
+              "baseline": "middle",
+              "font": {"expr": "font"},
+              "fontSize": 16,
+              "fontWeight": 600,
+              "x": {"expr": "(0.45*width)+((0.775*width)-(0.45*width))/2"},
+              "dy": {
+                "expr": "(scale('layer_1_y', datum['Percentage_end'])-scale('layer_1_y', datum['Percentage_start']))/2"
+              },
+              "align": "center",
+              "color": {
+                "expr": " ['#FFF', '#801b2b', '#111'][indexof(['Black', 'Brown', 'Yellow'], datum['Category'])]"
+              }
+            }
+          },
+          {
+            "mark": {
+              "type": "text",
+              "text": {"expr": "upper(datum['Category']) + '.'"},
+              "baseline": "middle",
+              "font": {"expr": "font"},
+              "fontSize": 14,
+              "fontWeight": 600,
+              "x": {"expr": "((0.22*width))"},
+              "dy": {"expr": "25"},
+              "align": "left",
+              "color": "#444"
+            }
+          },
+          {
+            "mark": {
+              "type": "text",
+              "text": {"expr": "split(upper(datum['description']), ',')"},
+              "baseline": "middle",
+              "font": {"expr": "font"},
+              "fontSize": 7,
+              "fontWeight": 200,
+              "x": {"expr": "((0.28*width))"},
+              "dy": {"expr": "40"},
+              "align": "left",
+              "color": "#888"
+            }
+          }
+        ]
+      },
+      {
+        "name": "footer",
+        "encoding": {"y": {"type": "ordinal", "field": "id", "axis": null}},
+        "layer": [
+          {
+            "name": "prefix_text",
+            "mark": {
+              "type": "text",
+              "text": {"expr": "datum['text'][0]"},
+              "dy": {"expr": "height-71"},
+              "align": "left",
+              "dx": {"expr": "-width/2+2"},
+              "fill": "#888",
+              "font": {"expr": "font"},
+              "fontWeight": 100,
+              "fontSize": 10,
+              "baseline": "middle"
+            }
+          },
+          {
+            "name": "href_text",
+            "params": [
+              {
+                "name": "footerHrefMouseover",
+                "select": {
+                  "type": "point",
+                  "on": "mouseover",
+                  "clear": "mouseout"
+                }
+              }
+            ],
+            "mark": {
+              "type": "text",
+              "text": {"expr": "datum['text'][1]"},
+              "dy": {"expr": "height-71"},
+              "align": "left",
+              "dx": {"expr": "-(width/2-70)"},
+              "fill": {"expr": "'#333'"},
+              "font": {"expr": "font"},
+              "fontWeight": 600,
+              "fontSize": 10,
+              "baseline": "middle",
+              "href": {"expr": "datum['href']"},
+              "cursor": "pointer",
+              "tooltip": {"expr": "datum['href']"},
+              "opacity": {
+                "expr": "length(data('barMouseover_store')) > 0 ? datum['_vgsid_'] === data('barMouseover_store')[0]['_vgsid_'] ? 1 : 0.65 : 0.65"
+              }
+            }
+          }
+        ],
+        "data": {
+          "values": [
+            {
+              "id": 1,
+              "text": [
+                "Data Source:",
+                "github.com/ajstarks/dubois-data-portraits/"
+              ],
+              "href": "https://github.com/ajstarks/dubois-data-portraits/blob/master/challenge/2024/challenge05/data.csv"
+            },
+            {
+              "id": 2,
+              "text": ["Original:", "Race Amalgamation in Georgia"],
+              "href": "https://github.com/Giammaria/Du-Bois-DVS-challenge/blob/main/2024/challenge-05/_artifacts/original-plate-13.jpg"
+            },
+            {
+              "id": 3,
+              "text": ["Challenge:", "2024 Du Bois Visualization Challenge"],
+              "href": "https://www.datavisualizationsociety.org/news/2024/2/2/advance-your-data-viz-skills-with-the-weekly-2024-du-bois-visualization-challenge"
+            },
+            {
+              "id": 4,
+              "text": ["Emulated By:", "Madison Giammaria"],
+              "href": "https://www.linkedin.com/in/madison-giammaria-58463b33"
+            }
+          ]
+        }
+      }
+    ],
+    "params": [
+      {"name": "font", "value": "sans-serif"},
+      {"name": "labelFontSize", "value": 12},
+      {"name": "labelFontWeight", "value": 100},
+      {"name": "labelFontOpacity", "value": 0.5},
+      {"name": "height", "expr": "1.3*width"},
+      {"name": "backgroundImageXY", "expr": "[0,0]"}
+    ]
+  }
