@@ -33,7 +33,7 @@ area,0.3,MULATTOES,2,-0.02,1795,,
 area,0.3,MULATTOES,3,-0.02,1795,,
 area,0.3,MULATTOES,4,-0.02,1795,,
 area,0.3,MULATTOES,5,-0.02,1795,,
-area,0.39,NEGROES,1,-0.03,1795,,
+area,0.39,NEGROES,1,0,1795,,
 label,0.3,,,1.02,,0.15,1
 label,0.68,,,1.02,,0.85,1
 label,0.99,,,1.02,,1890,1
