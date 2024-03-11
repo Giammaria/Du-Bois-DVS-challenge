@@ -1,0 +1,558 @@
+{
+    "$schema": "https://vega.github.io/schema/vega/v5.json",
+    "description": "Entry for challenge 06 in the 2024 DVS Du Bois Visualization Contest.",
+    "usermeta": {
+      "developedBy": "Madison Giammaria",
+      "LinkedIn": "https://www.linkedin.com/in/madison-giammaria-58463b33",
+      "email": "giammariam@gmail.com"
+    },
+    "title": {
+      "text": {
+        "signal": "['The Amalgamation of the White and Black elements of the population','in the United States.']"
+      },
+      "subtitle": {
+        "signal": "['───────','Amalgamation des elements blancs et noirs parmi la population Americaine.', '───────', 'Done by Atlanta University.']"
+      }
+    },
+    "width": 400,
+    "padding": 5,
+    "signals": [
+      {
+        "name": "height",
+        "description": "dynamically adjust the height based on the width",
+        "init": "1.3*width"
+      },
+      {
+        "name": "backgroundImageXY",
+        "description": "x and y coordinates for the background image",
+        "value": [-40, -80]
+      },
+      {
+        "name": "font",
+        "description": "font to be used throught the chart",
+        "value": "sans-serif"
+      }
+    ],
+    "marks": [
+      {
+        "name": "background_img",
+        "description": "background image to make the visual look like the original plate",
+        "type": "image",
+        "encode": {
+          "enter": {
+            "url": {
+              "value": "https://raw.githubusercontent.com/Giammaria/Du-Bois-DVS-challenge/main/2024/challenge-06/_artifacts/background.jpg"
+            },
+            "x": {"value": -40},
+            "y": {"value": -80},
+            "aspect": {"value": true},
+            "width": {"signal": "width*1.2"}
+          }
+        }
+      },
+      {
+        "name": "facet_group",
+        "type": "group",
+        "from": {
+          "facet": {
+            "name": "area_stack_facet",
+            "data": "area_data",
+            "groupby": "race category"
+          }
+        },
+        "marks": [
+          {
+            "name": "area_mark",
+            "from": {"data": "area_stack_facet"},
+            "type": "area",
+            "encode": {
+              "enter": {
+                "orient": {"value": "horizontal"},
+                "x": {"signal": "datum['x0']"},
+                "x2": {"signal": "datum['x1']"},
+                "y": {"signal": "datum['y0']"},
+                "fill": {"scale": "colorArea", "field": "race category"},
+                "stroke": {
+                  "signal": "datum['race category'] === 'MULATTOES_2' ? '#666' : datum['race category'] === 'MULATTOES_3' ? '#000': 'transparent'"
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "label_mark",
+        "type": "text",
+        "from": {"data": "label_data"},
+        "encode": {
+          "enter": {
+            "text": {"signal": "split(datum['label'], ',')"},
+            "x": {"scale": "x", "field": "x"},
+            "y": {"scale": "y", "field": "y"},
+            "font": {"signal": "font"},
+            "fontSize": {"signal": "[7,11,13,16][datum['label size category']]"},
+            "fill": {
+              "signal": "indexof(['6.337.980','3.542.147,90%', '411.613, 10%', 'NEGROES'], datum['label'])>=0?'#eee' : indexof(['1890', '1860', '1840', '1800', '85%', '15%', 'WHITES'], datum['label'])>=0? '#222' : '#444'"
+            },
+            "fontWeight": {"value": 600},
+            "align": {"value": "center"},
+            "baseline": {"value": "middle"}
+          }
+        }
+      },
+      {
+        "name": "jitter_area_mark",
+        "type": "rect",
+        "encode": {
+          "enter": {
+            "x": {"scale": "x", "value": "0.3"},
+            "x2": {"scale": "x", "value": "0"},
+            "y": {"scale": "y", "value": "-0.02"},
+            "y2": {"scale": "y", "value": "0.02"},
+            "fill": {"value": "rgb(223,210,198, 1)"}
+          }
+        }
+      },
+      {
+        "name": "jitter_line_mark",
+        "type": "line",
+        "from": {"data": "jitter_data"},
+        "encode": {
+          "enter": {
+            "x": {"scale": "x", "field": "x"},
+            "y": {"scale": "y", "field": "y"},
+            "stroke": {"value": "#666"},
+            "strokeWidth": {"value": 1}
+          }
+        }
+      },
+      {
+        "name": "gridline_mark",
+        "type": "rect",
+        "from": {"data": "gridline_data"},
+        "encode": {
+          "enter": {
+            "x": {
+              "scale": "x",
+              "field": "x",
+              "offset": {
+                "signal": "datum['label'] === '1800' ? 20 : datum['label'] === '1840' ? 27.5 : 25"
+              }
+            },
+            "x2": {
+              "scale": "x",
+              "value": 0,
+              "offset": {"signal": "datum['label'] === '1800' ? -5 : 0"}
+            },
+            "y": {"scale": "y", "field": "y"},
+            "height": {"value": 1},
+            "fill": {"value": "#666"},
+            "fillOpacity": {"value": 0.5}
+          }
+        }
+      },
+      {
+        "type": "group",
+        "name": "footer_group",
+        "description": "The group of marks located at the bottom of the canvas that provide additional information about the visual",
+        "marks": [
+          {
+            "name": "footer_prefix_text",
+            "description": "The labels for each footer item",
+            "type": "text",
+            "from": {"data": "footer"},
+            "interactive": false,
+            "encode": {
+              "update": {
+                "opacity": {"value": 1},
+                "fill": {"signal": "'#888'"},
+                "font": {"signal": "font"},
+                "fontWeight": {"value": 100},
+                "fontSize": {"value": 10},
+                "baseline": {"value": "middle"},
+                "x": {"signal": "0"},
+                "y": {"signal": "scale('yScaleFooter', datum['id'])"},
+                "text": {"signal": "datum['text'][0]"}
+              }
+            }
+          },
+          {
+            "name": "footer_href_text",
+            "description": "The hyperlinks for each footer item",
+            "type": "text",
+            "from": {"data": "footer"},
+            "encode": {
+              "update": {
+                "opacity": {"value": 0.65},
+                "fill": {"signal": "'#333'"},
+                "font": {"signal": "font"},
+                "fontWeight": {"value": 600},
+                "fontSize": {"value": 10},
+                "baseline": {"value": "middle"},
+                "x": {
+                  "signal": "data('footer_prefix_text')[0]['bounds']['x2']+5"
+                },
+                "y": {"signal": "scale('yScaleFooter', datum['id'])"},
+                "text": {"signal": "datum['text'][1]"},
+                "href": {"field": "href"},
+                "cursor": {"value": "pointer"},
+                "tooltip": {"field": "href"}
+              },
+              "hover": {"opacity": {"value": 1}}
+            }
+          }
+        ]
+      }
+    ],
+    "axes": [],
+    "scales": [
+      {
+        "name": "x",
+        "type": "linear",
+        "domain": [0, 1],
+        "range": [{"signal": "width+30"}, -22.5]
+      },
+      {
+        "name": "y",
+        "type": "linear",
+        "domain": [0, 1],
+        "range": [{"signal": "height*0.19"}, {"signal": "height-25"}]
+      },
+      {
+        "name": "colorArea",
+        "type": "ordinal",
+        "domain": [
+          "WHITES",
+          "MULATTOES_1",
+          "MULATTOES_2",
+          "MULATTOES_3",
+          "MULATTOES_4",
+          "MULATTOES_5",
+          "NEGROES"
+        ],
+        "range": [
+          "rgb(223,210,198, 1)",
+          "#ECC375",
+          "#F0B645",
+          "#8C613B",
+          "#8C613B",
+          "#2E241B",
+          "#0E0C09"
+        ]
+      },
+      {
+        "name": "yScaleFooter",
+        "type": "band",
+        "domain": {"data": "footer", "field": "id"},
+        "range": [
+          {"signal": "height+20"},
+          {"signal": "height+30+length(data('footer'))*11"}
+        ]
+      }
+    ],
+    "data": [
+      {
+        "name": "dataset",
+        "url": "https://raw.githubusercontent.com/Giammaria/Du-Bois-DVS-challenge/main/2024/challenge-06/data/data.csv",
+        "format": {"type": "csv", "parse": "auto"},
+        "transform": [
+          {
+            "type": "formula",
+            "expr": "datum['race'] === 'MULATTOES' ? datum['race']+'_'+toString(datum['race subcategory']) : datum['race']",
+            "as": "race category"
+          },
+          {
+            "type": "formula",
+            "expr": "indexof(domain('colorArea'), datum['race category'])",
+            "as": "race category sort"
+          }
+        ]
+      },
+      {
+        "name": "area_data",
+        "source": "dataset",
+        "transform": [
+          {"type": "filter", "expr": "datum['type'] === 'area'"},
+          {
+            "type": "project",
+            "fields": [
+              "type",
+              "year",
+              "race",
+              "race category",
+              "race category sort",
+              "x",
+              "y"
+            ],
+            "as": [
+              "type",
+              "year",
+              "race",
+              "race category",
+              "race category sort",
+              "x",
+              "y"
+            ]
+          },
+          {
+            "type": "window",
+            "ops": ["lag"],
+            "fields": ["x"],
+            "sort": {"field": "race category sort", "order": "ascending"},
+            "groupby": ["year"],
+            "frame": [null, 0],
+            "as": ["value"]
+          },
+          {
+            "type": "formula",
+            "expr": "datum['x'] - (datum['value'] || 0)",
+            "as": "value"
+          },
+          {
+            "type": "stack",
+            "groupby": ["year"],
+            "sort": {"field": ["race category sort"], "order": ["ascending"]},
+            "field": "value",
+            "as": ["x0", "x1"]
+          },
+          {"type": "formula", "expr": "scale('x', datum['x0'])", "as": "x0"},
+          {"type": "formula", "expr": "scale('x', datum['x1'])", "as": "x1"},
+          {"type": "formula", "expr": "scale('y', datum['y'])", "as": "y0"}
+        ]
+      },
+      {
+        "name": "jitter_data",
+        "values": [{}],
+        "transform": [
+          {"type": "formula", "expr": "sequence(0.3, 0.05, -0.0025)", "as": "x"},
+          {"type": "flatten", "fields": ["x"]},
+          {"type": "formula", "expr": "-0.025+random()/100", "as": "y"},
+          {
+            "type": "joinaggregate",
+            "ops": ["min"],
+            "fields": ["x"],
+            "as": ["min_x"]
+          },
+          {
+            "type": "formula",
+            "expr": "datum['x'] === datum['min_x'] ? 0.02  : datum['y']",
+            "as": "y"
+          },
+          {
+            "type": "formula",
+            "expr": "datum['x'] === datum['min_x'] ? 0 : datum['x']",
+            "as": "x"
+          }
+        ]
+      },
+      {
+        "name": "label_data",
+        "values": [
+          {
+            "type": "label",
+            "x": "0.3",
+            "race": "",
+            "race subcategory": "",
+            "y": "1.02",
+            "year": "",
+            "label": "15%",
+            "label size category": "1"
+          },
+          {
+            "type": "label",
+            "x": "0.68",
+            "race": "",
+            "race subcategory": "",
+            "y": "1.02",
+            "year": "",
+            "label": "85%",
+            "label size category": "1"
+          },
+          {
+            "type": "label",
+            "x": "0.99",
+            "race": "",
+            "race subcategory": "",
+            "y": "1.02",
+            "year": "",
+            "label": "1890",
+            "label size category": "1"
+          },
+          {
+            "type": "label",
+            "x": "0.3",
+            "race": "",
+            "race subcategory": "",
+            "y": "0.98",
+            "year": "",
+            "label": "1.113.063",
+            "label size category": "0"
+          },
+          {
+            "type": "label",
+            "x": "0.68",
+            "race": "",
+            "race subcategory": "",
+            "y": "0.97",
+            "year": "",
+            "label": "6.337.980",
+            "label size category": "3"
+          },
+          {
+            "type": "label",
+            "x": "0.11",
+            "race": "",
+            "race subcategory": "",
+            "y": "0.8",
+            "year": "",
+            "label": "WHITES",
+            "label size category": "2"
+          },
+          {
+            "type": "label",
+            "x": "0.31",
+            "race": "",
+            "race subcategory": "",
+            "y": "0.8",
+            "year": "",
+            "label": "MULATTOES,MULATRES",
+            "label size category": "0"
+          },
+          {
+            "type": "label",
+            "x": "0.57",
+            "race": "",
+            "race subcategory": "",
+            "y": "0.79",
+            "year": "",
+            "label": "NEGROES",
+            "label size category": "2"
+          },
+          {
+            "type": "label",
+            "x": "0.3",
+            "race": "",
+            "race subcategory": "",
+            "y": "0.6575",
+            "year": "",
+            "label": "411.613, 10%",
+            "label size category": "1"
+          },
+          {
+            "type": "label",
+            "x": "0.54",
+            "race": "",
+            "race subcategory": "",
+            "y": "0.6575",
+            "year": "",
+            "label": "3.542.147,90%",
+            "label size category": "1"
+          },
+          {
+            "type": "label",
+            "x": "0.77",
+            "race": "",
+            "race subcategory": "",
+            "y": "0.67",
+            "year": "",
+            "label": "1860",
+            "label size category": "1"
+          },
+          {
+            "type": "label",
+            "x": "0.64",
+            "race": "",
+            "race subcategory": "",
+            "y": "0.33",
+            "year": "",
+            "label": "1840",
+            "label size category": "1"
+          },
+          {
+            "type": "label",
+            "x": "0.45",
+            "race": "",
+            "race subcategory": "",
+            "y": "0.01",
+            "year": "",
+            "label": "1800",
+            "label size category": "1"
+          }
+        ],
+        "transform": [
+          {"type": "filter", "expr": "isValid(datum['label'])"},
+          {
+            "type": "project",
+            "fields": ["type", "x", "y", "label", "label size category"],
+            "as": ["type", "x", "y", "label", "label size category"]
+          }
+        ]
+      },
+      {
+        "name": "gridline_data",
+        "source": "label_data",
+        "transform": [
+          {
+            "type": "filter",
+            "expr": "indexof(['1860','1840', '1800'],datum['label'])>=0"
+          }
+        ]
+      },
+      {
+        "name": "footer",
+        "values": [
+          {
+            "id": 1,
+            "text": [
+              "Data Source:",
+              "github.com/ajstarks/dubois-data-portraits/"
+            ],
+            "href": "https://github.com/ajstarks/dubois-data-portraits/tree/master/challenge/2024/challenge06"
+          },
+          {
+            "id": 2,
+            "text": [
+              "Original:",
+              "The Amalgamation of the White and Black elements of the population in the US"
+            ],
+            "href": "https://github.com/Giammaria/Du-Bois-DVS-challenge/blob/main/2024/challenge-06/_artifacts/original-plate-54.jpg"
+          },
+          {
+            "id": 4,
+            "text": ["Challenge:", "2024 Du Bois Visualization Challenge"],
+            "href": "https://www.datavisualizationsociety.org/news/2024/2/2/advance-your-data-viz-skills-with-the-weekly-2024-du-bois-visualization-challenge"
+          },
+          {
+            "id": 5,
+            "text": ["Emulated By:", "Madison Giammaria"],
+            "href": "https://www.linkedin.com/in/madison-giammaria-58463b33"
+          }
+        ]
+      }
+    ],
+    "config": {
+      "title": {
+        "text": {
+          "signal": "['The Amalgamation of the White and Black elements of the population','in the United States.']"
+        },
+        "orient": "top",
+        "anchor": "middle",
+        "font": {"value": "Times"},
+        "fontSize": 14,
+        "lineHeight": 20,
+        "offset": -145,
+        "fontWeight": 200,
+        "color": "#888",
+        "zindex": 99,
+        "subtitle": {
+          "signal": "['───────','Amalgamation des elements blancs et noirs parmi la population Americaine.', '───────', 'Done by Atlanta University.']"
+        },
+        "subtitleFont": {"value": "Times"},
+        "subtitleFontSize": 10,
+        "subtitleFontWeight": 100,
+        "subtitleColor": "#999",
+        "subtitleLineHeight": 16,
+        "subtitlePadding": 5
+      }
+    }
+  }
