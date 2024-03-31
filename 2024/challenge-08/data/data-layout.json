@@ -1,0 +1,98 @@
+[
+  {
+    "year": "1860",
+    "location description": "slaves bottom left",
+    "x": "0.09",
+    "y": "0.01"
+  },
+  {
+    "year": "1860",
+    "location description": "free laborers bottm left",
+    "x": "0.09",
+    "y": " 0.31103637483293967"
+  },
+  {
+    "year": "1860",
+    "location description": "free laborers top left",
+    "x": "0.08",
+    "y": " 0.34927198857602604"
+  },
+  {
+    "year": "1860",
+    "location description": "free laborers top right",
+    "x": "0.4059323827336318",
+    "y": " 0.34927198857602604"
+  },
+  {
+    "year": "1860",
+    "location description": "free laborers middle right",
+    "x": "0.40260356789466756",
+    "y": "0.33"
+  },
+  {
+    "year": "1860",
+    "location description": "free laborers bottm right",
+    "x": "0.40260356789466756",
+    "y": "0.31"
+  },
+  {
+    "year": "1860",
+    "location description": "slaves bottom right",
+    "x": "0.4024748765993468",
+    "y": "0.35"
+  },
+  {
+    "year": "1890",
+    "location description": "tenants bottom left",
+    "x": "0.6392439815370887",
+    "y": " 0.1922552625207099"
+  },
+  {
+    "year": "1890",
+    "location description": "tenenants left point 2",
+    "x": "0.6423869089494786",
+    "y": " 0.27871102798606706"
+  },
+  {
+    "year": "1890",
+    "location description": "tenants left point 3",
+    "x": "0.6396500740689899",
+    "y": " 0.40755103324811104"
+  },
+  {
+    "year": "1890",
+    "location description": "tenants left point 4",
+    "x": "0.6416490788563061",
+    "y": " 0.4931736417348731"
+  },
+  {
+    "year": "1890",
+    "location description": "peasant bottom left",
+    "x": "0.6445489227108678",
+    "y": " 0.6502856946756121"
+  },
+  {
+    "year": "1890",
+    "location description": "peasant top left",
+    "x": "0.64",
+    "y": " 0.7658256928834667"
+  },
+  {
+    "year": "1890",
+    "location description": "peasant top right",
+    "x": "0.9595194381052065",
+    "y": " 0.7658256928834667"
+  },
+  {
+    "year": "1890",
+    "location description": "peasant bottom right",
+    "x": "0.9599112316042943",
+    "y": " 0.6502856946756121"
+  },
+  {
+    "year": "1890",
+    "location description": "tenants bottom right",
+    "x": "0.9569027151003505",
+    "y": " 0.1922552625207099"
+  }
+]
