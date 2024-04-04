@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega/v5.json",
-  "description": "Entry for challenge 08 in the 2024 DVS Du Bois Visualization Contest.",
+  "description": "Entry for challenge 09 in the 2024 DVS Du Bois Visualization Contest.",
   "usermeta": {
     "developedBy": "Madison Giammaria",
     "LinkedIn": "https://www.linkedin.com/in/madison-giammaria-58463b33",
@@ -8,10 +8,10 @@
   },
   "title": {
     "text": [
-      "‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎THE RISE OF THE NEGROES FROM SLAVERY TO FREEDOM IN ONE GENERATION .",
-      "PROGRÈS GRADUEL DES NÈGRES DE L'ESCLAVAGE À LA LIBERTÉ EN UNE GÉNÉRATION ."
+      "PROPORTION OF FREEMAN AND SLAVES AMONG AMERICAN NEGROES .",
+      "PROPORTION DES NÈGRES LIBRES ET DES ESCLAVES EN AMÉRIQUE ."
     ],
-    "subtitle": {"signal": "['‎','‎', 'DONE ‎ BY ‎ ATLANTA ‎ UNIVERSITY.']"}
+    "subtitle": {"signal": "['‎','‎', 'DONE ‎ BY ‎ ATLANTA ‎ UNIVERSITY .']"}
   },
   "width": 400,
   "padding": 5,
@@ -40,7 +40,7 @@
       "encode": {
         "enter": {
           "url": {
-            "value": "https://raw.githubusercontent.com/Giammaria/Du-Bois-DVS-challenge/main/2024/challenge-08/_artifacts/background.jpg"
+            "value": "https://raw.githubusercontent.com/Giammaria/Du-Bois-DVS-challenge/main/2024/challenge-09/_artifacts/background.jpg"
           },
           "x": {"value": -40},
           "y": {"value": -80},
@@ -50,150 +50,88 @@
       }
     },
     {
-      "name": "descriptive_text",
-      "type": "text",
-      "encode": {
-        "enter": {
-          "text": {
-            "value": [
-              "IN 1890 NEARLY ONE FITH OF THEM OWNED THEIR OWN HOMES AND FARMS.",
-              "THIS ADVANCE WAS ACCOMPLISHED ENTIRLEY WITHOUT STATE AID, AND IN THE",
-              "FACE OF PROSCRIPTIVE LAWS.",
-              "‎",
-              "EN 1890 ENVIRON UN CINQUÈME ÉTAIENT PROPRIÉTAIRES DE LEURS HAB-",
-              "ITATIONS ET DE LEURS FERMES. CE PROGRÈS S'EST ACCOMPLI SANS",
-              "SECOURS AUCUC DE L'ETAT ET EN PRÉSENCE DE LOIS OEFAVORABLES.",
-              "‎",
-              "‎",
-              "‎",
-              "‎",
-              "‎",
-              "‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ IN 1860 NEARLY 90% OF THE BLACKS WERE SLAVES.",
-              "‎",
-              "‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ EN 1860 ENVIRON 90% DES NÈGRES ÉTAIENT ESCLAVES."
-            ]
-          },
-          "x": {"value": 0},
-          "y": {
-            "signal": "scale('y', +extent(pluck(data('location'), 'y'))[1])"
-          },
-          "baseline": {"value": "top"},
-          "font": {"signal": "font"},
-          "fontSize": {"signal": "6.5"},
-          "fontWeight": {"value": 100},
-          "fill": {"value": "#333"}
-        }
-      }
-    },
-    {
-      "name": "rect_marks",
+      "name": "background_rect",
       "type": "rect",
-      "from": {"data": "rect_data"},
       "encode": {
         "update": {
-          "x": {"scale": "x", "field": "x"},
-          "width": {"field": "width"},
-          "y": {"scale": "y", "field": "y"},
-          "y2": {"scale": "y", "field": "y2"},
-          "fill": {"field": "fill"},
-          "stroke": {"value": "#0A100B"}
+          "x": {"scale": "x", "signal": "domain('x')[0]"},
+          "x2": {"signal": "range('x')[1]"},
+          "y": {"scale": "y", "value": 0},
+          "y2": {"signal": "range('y')[1]"},
+          "fill": {"value": "transparent"},
+          "strokeWidth": {"value": 0.5},
+          "stroke": {"value": "#171715"}
         }
       }
     },
     {
-      "name": "year_text_marks",
-      "type": "text",
-      "from": {"data": "rect_marks"},
-      "encode": {
-        "update": {
-          "x": {"signal": "datum['x']+datum['width']/2"},
-          "y": {"field": "y"},
-          "dy": {"value": -5},
-          "align": {"value": "center"},
-          "text": {"signal": "datum['datum']['year']"},
-          "fontSize": {"value": 18},
-          "font": {"signal": "'sans-serif'"},
-          "fontWeight": {"value": 600},
-          "fill": {"value": "#0A100B"},
-          "opacity": {
-            "signal": "datum['datum']['type'] === 'free laborers' || datum['datum']['type'] === 'peasant' ? 1 : 0"
-          }
-        }
-      }
-    },
-    {
-      "name": "percentage_marks",
-      "type": "text",
-      "from": {"data": "rect_data"},
-      "encode": {
-        "update": {
-          "x": {
-            "signal": "scale('x', datum['x'])+(datum['type'] === 'free laborers' ? 0 : datum['width']/2)"
-          },
-          "dx": {"signal": "datum['type'] === 'free laborers' ? 2 : 0"},
-          "y": {"signal": "scale('y', datum['percentage label']['y'])"},
-          "dy": {
-            "signal": "datum['percentage label']['align'] === 'center' ? -9 : 2"
-          },
-          "align": {"signal": "datum['percentage label']['align']"},
-          "baseline": {"value": "middle"},
-          "fontSize": {"value": 18},
-          "font": {"signal": "'sans-serif'"},
-          "text": {"signal": "datum['percentage label']['value']"},
-          "fill": {"signal": "datum['percentage label']['fill']"}
-        }
-      }
-    },
-    {
-      "name": "description_marks",
-      "type": "text",
-      "from": {"data": "rect_data"},
-      "encode": {
-        "update": {
-          "x": {"signal": "scale('x', datum['x'])+(datum['width']/2)"},
-          "dx": {"signal": "datum['description label']['dx']"},
-          "y": {"signal": "scale('y', datum['description label']['y'])"},
-          "dy": {"signal": "datum['description label']['dx'] === 0 ? 9 : 0"},
-          "align": {"value": "center"},
-          "baseline": {"value": "middle"},
-          "lineHeight": {"value": 8},
-          "fontSize": {"value": 8},
-          "fontWeight": {"value": "600"},
-          "font": {"signal": "'sans-serif'"},
-          "text": {"signal": "datum['description label']['value']"},
-          "fill": {"signal": "datum['description label']['fill']"}
-        }
-      }
-    },
-    {
-      "name": "group_lines",
       "type": "group",
       "from": {
         "facet": {
-          "name": "line_facet",
-          "data": "connecting_lines",
-          "groupby": ["index"]
+          "name": "stack_facet",
+          "data": "dataset_stack",
+          "groupby": "key"
         }
       },
       "marks": [
         {
-          "name": "line_marks",
-          "type": "line",
-          "from": {"data": "line_facet"},
+          "name": "area_marks",
+          "type": "area",
+          "from": {"data": "stack_facet"},
           "encode": {
             "update": {
-              "tooltip": {"signal": "datum"},
-              "x": {"signal": "scale('x', datum['x'])"},
-              "y": {"signal": "scale('y', datum['y'])"},
-              "stroke": {"value": "#999999"},
-              "strokeDash": {"value": [8,3]},
-              "strokeWidth": {"value": 0.5},
-              "strokeOpacity": {"value": 1},
-              "opacity": {"value": 1}
+              "orient": {"value": "vertical"},
+              "interpolate": {"value": "monotone"},
+              "x": {"scale": "x", "field": "Year"},
+              "y": {"scale": "y", "field": "y0"},
+              "y2": {"scale": "y", "field": "y1"},
+              "fill": {"scale": "color", "field": "key"}
+            }
+          }
+        },
+        {
+          "name": "percentage_text",
+          "type": "text",
+          "from": {"data": "stack_facet"},
+          "encode": {
+            "update": {
+              "text": {
+                "signal": "replace(format(datum['value'], '.1%'), '.0', '')"
+              },
+              "baseline": {"value": "bottom"},
+              "align": {"value": "center"},
+              "dy": {"value": -0.5},
+              "font": {"value": "Gill Sans"},
+              "fontSize": {"value": 13},
+              "fontWeight": {"value": 700},
+              "x": {"scale": "x", "field": "Year"},
+              "y": {"scale": "y", "field": "label y"},
+              "fill": {"value": "#171715"},
+              "opacity": {"signal": "datum['key'] === 'Free' ? 1 : 0"}
             }
           }
         }
       ]
+    },
+    {
+      "name": "slaves_text",
+      "type": "text",
+      "encode": {
+        "update": {
+          "text": {
+            "signal": "['SLAVES', 'ESCLAVES']"
+          },
+          "baseline": {"value": "bottom"},
+          "align": {"value": "center"},
+          "dy": {"value": -0.5},
+          "font": {"value": "Sans-Serif"},
+          "fontSize": {"value": 18},
+          "fontWeight": {"value": 500},
+          "x": {"signal": "width/2"},
+          "y": {"scale": "y", "value": "0.45"},
+          "fill": {"value": "#EEEEEE"}
+        }
+      }
     },
     {
       "type": "group",
@@ -249,18 +187,51 @@
       ]
     }
   ],
+  "axes": [
+    {
+      "scale": "x",
+      "orient": "top",
+      "tickCount": {"signal": "length(data('dataset'))"},
+      "offset": {"signal": "-(backgroundImageXY[1]+150)"},
+      "zindex": 99,
+      "format": ".0f",
+      "labelFontSize": 16,
+      "labelFontWeight": "600",
+      "labelFont": "Gill Sans",
+      "domain": false,
+      "ticks": false,
+      "grid": true,
+      "gridScale": "y",
+      "gridColor": "#171715",
+      "gridOpacity": 1,
+      "gridWidth": 0.25,
+      "title": "FREE - LIBRE",
+      "titlePadding": -45,
+      "titleFont": "Sans-Serif",
+      "titleFontSize": 17,
+      "titleFontWeight": 700
+    }
+  ],
   "scales": [
     {
       "name": "x",
       "type": "linear",
-      "domain": [0, 1],
-      "range": [{"signal": "-14.9"}, {"signal": "width+20+10.9"}]
+      "domain": {"data": "dataset", "field": "Year", "sort": true},
+      "domainMin": {"signal": "extent(pluck(data('dataset'), 'Year'))[0]"},
+      "domainMax": {"signal": "extent(pluck(data('dataset'), 'Year'))[1]"},
+      "range": [{"signal": "0"}, {"signal": "width"}]
     },
     {
       "name": "y",
       "type": "linear",
       "domain": [0, 1],
-      "range": [{"signal": "height-4"}, {"signal": "backgroundImageXY[1]+9"}]
+      "range": [{"signal": "backgroundImageXY[1]+150"}, {"signal": "height-15"}]
+    },
+    {
+      "name": "color",
+      "type": "ordinal",
+      "domain": ["Slave", "Free"],
+      "range": ["#171715", "#408C61"]
     },
     {
       "name": "yScaleFooter",
@@ -275,195 +246,33 @@
   "data": [
     {
       "name": "dataset",
-      "url": "https://raw.githubusercontent.com/Giammaria/Du-Bois-DVS-challenge/main/2024/challenge-08/data/data-original.csv",
+      "url": "https://raw.githubusercontent.com/Giammaria/Du-Bois-DVS-challenge/main/2024/challenge-09/data/data.csv",
       "format": {"type": "csv", "parse": "auto"}
     },
     {
-      "name": "location",
-      "url": "https://raw.githubusercontent.com/Giammaria/Du-Bois-DVS-challenge/main/2024/challenge-08/data/data-layout.json",
-      "format": {"parse": "auto"}
-    },
-    {
-      "name": "rect_data",
-      "source": "location",
+      "name": "dataset_stack",
+      "source": "dataset",
       "transform": [
+        {"type": "fold", "fields": ["Slave", "Free"]},
+        {"type": "formula", "expr": "datum['value']/100", "as": "value"},
         {
-          "type": "filter",
-          "expr": "datum['location description'] !== 'free laborers middle right'"
+          "type": "stack",
+          "field": "value",
+          "offset": "normalize",
+          "sort": {"field": "key", "order": "ascending"},
+          "groupby": ["Year"]
         },
-        {
-          "type": "formula",
-          "expr": "indexof(datum['location description'], 'slaves') >= 0 ? 'slaves' : indexof(datum['location description'], 'free laborers') >= 0 ? 'free laborers' : indexof(datum['location description'], 'peasant') >= 0 ? 'peasant' : 'tenants'",
-          "as": "type"
-        },
-        {
-          "type": "joinaggregate",
-          "ops": ["min", "max"],
-          "fields": ["y", "y"],
-          "as": ["min y", "max y"],
-          "groupby": ["year", "type"]
-        },
-        {
-          "type": "joinaggregate",
-          "ops": ["min", "max"],
-          "fields": ["x", "x"],
-          "as": ["x", "max x"],
-          "groupby": ["year"]
-        },
-        {
-          "type": "formula",
-          "expr": "scale('x', (datum['max x'] - datum['x']))",
-          "as": "width"
-        },
-        {
-          "type": "aggregate",
-          "ops": ["average"],
-          "fields": ["width"],
-          "as": ["width"],
-          "groupby": ["year", "type", "x", "width", "min y", "max y"]
-        },
-        {"type": "fold", "fields": ["min y", "max y"]},
         {
           "type": "window",
-          "ops": ["lead"],
-          "fields": ["value"],
-          "as": ["lead y"],
-          "groupby": ["year"]
+          "ops": ["lag"],
+          "fields": ["y1"],
+          "groupby": ["key"],
+          "as": ["label y"]
         },
         {
           "type": "formula",
-          "expr": "isValid(datum['lead y']) && datum['key'] === 'max y' ? datum['lead y'] : datum['value']",
-          "as": "value"
-        },
-        {
-          "type": "formula",
-          "expr": "indexof(datum['key'], 'min') >= 0 ? 'y' : 'y2'",
-          "as": "key"
-        },
-        {
-          "type": "pivot",
-          "field": "key",
-          "value": "value",
-          "groupby": ["year", "type", "x", "width"]
-        },
-        {
-          "type": "formula",
-          "expr": "datum['type'] === 'slaves' ? '#0A100B' : datum['type'] === 'free laborers' ? '#004D1B' : datum['type'] === 'tenants' ? '#004D1B' : '#9E0524'",
-          "as": "fill"
-        },
-        {
-          "type": "formula",
-          "expr": "datum['type'] === 'slaves' ? '89%' : datum['type'] === 'free laborers' ? '11%' : datum['type'] === 'tenants' ? '81%' : '19%'",
-          "as": "percentage label"
-        },
-        {
-          "type": "formula",
-          "expr": "{value: datum['percentage label'], align: datum['type'] === 'free laborers' ? 'left' : 'center', 'fill': datum['type'] === 'slaves' ? '#9E0524' : '#0A100B', 'y': (datum['y']+(datum['y2']-datum['y'])/2)}",
-          "as": "percentage label"
-        },
-        {
-          "type": "formula",
-          "expr": "datum['type'] === 'slaves' ? ['SLAVES', 'ESCLAVES'] : datum['type'] === 'free laborers' ? ['FREE LABORORERS', 'OUVRIERS LIBRES'] : datum['type'] === 'tenants' ? ['TENANTS', 'MÉTAYERS'] : ['PEASANT PROPRIETORS', 'PAYSANS PROPRIETAIRES']",
-          "as": "description label"
-        },
-        {
-          "type": "formula",
-          "expr": "{value: datum['description label'], dx: datum['type'] === 'free laborers' ? 15 : 0, 'fill': datum['type'] === 'slaves' ? '#9E0524' : '#0A100B', 'y': (datum['y']+(datum['y2']-datum['y'])/2)}",
-          "as": "description label"
-        }
-      ]
-    },
-    {
-      "name": "connecting_lines",
-      "values": [
-        {
-          "start description": "free laborers top right",
-          "end description": "peasant bottom left"
-        },
-        {
-          "start description": "free laborers top right",
-          "end description": "tenants left point 4"
-        },
-        {
-          "start description": "free laborers middle right",
-          "end description": "tenants left point 3"
-        },
-        {
-          "start description": "free laborers middle right",
-          "end description": "tenants left point 2"
-        },
-        {
-          "start description": "free laborers bottom right",
-          "end description": "tenants bottom left"
-        }
-      ],
-      "transform": [
-        {
-          "type": "formula",
-          "expr": "indexof(datum['start description'], 'slaves') >= 0 ? 'slaves' : indexof(datum['start description'], 'free laborers') >= 0 ? 'free laborers' : indexof(datum['start description'], 'peasant') >= 0 ? 'peasant' : 'tenants'",
-          "as": "start type"
-        },
-        {
-          "type": "formula",
-          "expr": "indexof(datum['end description'], 'slaves') >= 0 ? 'slaves' : indexof(datum['end description'], 'free laborers') >= 0 ? 'free laborers' : indexof(datum['end description'], 'peasant') >= 0 ? 'peasant' : 'tenants'",
-          "as": "end type"
-        },
-        {
-          "type": "lookup",
-          "from": "rect_data",
-          "key": "type",
-          "fields": ["start type"],
-          "values": ["x", "width"],
-          "as": ["x", "start width"]
-        },
-        {
-          "type": "formula",
-          "expr": "datum['x'] + invert('x', datum['start width']-13)",
-          "as": "x"
-        },
-        {
-          "type": "lookup",
-          "from": "location",
-          "key": "location description",
-          "fields": ["start description"],
-          "values": ["y"],
-          "as": ["y"]
-        },
-        {
-          "type": "lookup",
-          "from": "rect_data",
-          "key": "type",
-          "fields": ["end type"],
-          "values": ["x", "width"],
-          "as": ["x2", "end width"]
-        },
-        {
-          "type": "lookup",
-          "from": "location",
-          "key": "location description",
-          "fields": ["end description"],
-          "values": ["y"],
-          "as": ["y2"]
-        },
-        {
-          "type": "window", "ops": ["row_number"], "as": ["index"]
-        },
-        {
-          "type": "formula",
-          "expr": "[datum['x'], datum['x2']]",
-          "as": "x"
-        },
-        {
-          "type": "formula",
-          "expr": "[datum['y'], datum['y2']]",
-          "as": "y"
-        },
-        {
-          "type": "flatten", "fields": ["x", "y"]
-        },
-        {
-          "type": "project",
-          "fields": ["index", "x", "y"]
+          "expr": "datum['Year'] === domain('x')[1] ? datum['label y'] : datum['y1']",
+          "as": "label y"
         }
       ]
     },
@@ -476,15 +285,15 @@
             "Data Source:",
             "github.com/ajstarks/dubois-data-portraits/"
           ],
-          "href": "https://github.com/ajstarks/dubois-data-portraits/tree/master/challenge/2024/challenge07"
+          "href": "https://github.com/ajstarks/dubois-data-portraits/tree/master/challenge/2024/challenge08"
         },
         {
           "id": 2,
           "text": [
             "Original:",
-            "The Rise of The Negroes from Slavery to Freedom in One Generaration"
+            "Proportion of Freemen and Slaves Among American Negroes"
           ],
-          "href": "https://github.com/ajstarks/dubois-data-portraits/blob/master/challenge/2024/challenge08/original-plate-50.jpg"
+          "href": "https://github.com/ajstarks/dubois-data-portraits/blob/master/challenge/2024/challenge09/original-plate-51.jpg"
         },
         {
           "id": 4,
@@ -504,14 +313,14 @@
       "orient": "top",
       "anchor": "middle",
       "font": {"value": "sans-serif"},
-      "fontSize": 9,
-      "lineHeight": 20,
-      "offset": -80,
+      "fontSize": 11,
+      "lineHeight": 25,
+      "offset": -90,
       "fontWeight": 600,
       "color": "#000",
       "zindex": 99,
       "subtitleFont": {"value": "sans-serif"},
-      "subtitleFontSize": 7,
+      "subtitleFontSize": 9,
       "subtitleFontWeight": 600,
       "subtitleColor": "#000",
       "subtitleLineHeight": 11,
