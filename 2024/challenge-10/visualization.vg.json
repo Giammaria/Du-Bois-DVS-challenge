@@ -1,0 +1,330 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "Entry for challenge 09 in the 2024 DVS Du Bois Visualization Contest.",
+  "usermeta": {
+    "developedBy": "Madison Giammaria",
+    "LinkedIn": "https://www.linkedin.com/in/madison-giammaria-58463b33",
+    "email": "giammariam@gmail.com"
+  },
+  "title": {
+    "text": [
+      "PROPORTION OF FREEMAN AND SLAVES AMONG AMERICAN NEGROES .",
+      "PROPORTION DES NÈGRES LIBRES ET DES ESCLAVES EN AMÉRIQUE ."
+    ],
+    "subtitle": {"signal": "['‎','‎', 'DONE ‎ BY ‎ ATLANTA ‎ UNIVERSITY .']"}
+  },
+  "width": 400,
+  "padding": 5,
+  "signals": [
+    {
+      "name": "height",
+      "description": "dynamically adjust the height based on the width",
+      "init": "1.3*width"
+    },
+    {
+      "name": "backgroundImageXY",
+      "description": "x and y coordinates for the background image",
+      "value": [-40, -80]
+    },
+    {
+      "name": "font",
+      "description": "font to be used throught the chart",
+      "value": "sans-serif"
+    }
+  ],
+  "marks": [
+    {
+      "name": "background_img",
+      "description": "background image to make the visual look like the original plate",
+      "type": "image",
+      "encode": {
+        "enter": {
+          "url": {
+            "value": "https://raw.githubusercontent.com/Giammaria/Du-Bois-DVS-challenge/main/2024/challenge-09/_artifacts/background.jpg"
+          },
+          "x": {"value": -40},
+          "y": {"value": -80},
+          "aspect": {"value": true},
+          "width": {"signal": "width*1.2"}
+        }
+      }
+    },
+    {
+      "name": "background_rect",
+      "type": "rect",
+      "encode": {
+        "update": {
+          "x": {"scale": "x", "signal": "domain('x')[0]"},
+          "x2": {"signal": "range('x')[1]"},
+          "y": {"scale": "y", "value": 0},
+          "y2": {"signal": "range('y')[1]"},
+          "fill": {"value": "transparent"},
+          "strokeWidth": {"value": 0.5},
+          "stroke": {"value": "#171715"}
+        }
+      }
+    },
+    {
+      "type": "group",
+      "from": {
+        "facet": {
+          "name": "stack_facet",
+          "data": "dataset_stack",
+          "groupby": "key"
+        }
+      },
+      "marks": [
+        {
+          "name": "area_marks",
+          "type": "area",
+          "from": {"data": "stack_facet"},
+          "encode": {
+            "update": {
+              "orient": {"value": "vertical"},
+              "interpolate": {"value": "monotone"},
+              "x": {"scale": "x", "field": "Year"},
+              "y": {"scale": "y", "field": "y0"},
+              "y2": {"scale": "y", "field": "y1"},
+              "fill": {"scale": "color", "field": "key"}
+            }
+          }
+        },
+        {
+          "name": "percentage_text",
+          "type": "text",
+          "from": {"data": "stack_facet"},
+          "encode": {
+            "update": {
+              "text": {
+                "signal": "replace(format(datum['value'], '.1%'), '.0', '')"
+              },
+              "baseline": {"value": "bottom"},
+              "align": {"value": "center"},
+              "dy": {"value": -0.5},
+              "font": {"value": "Gill Sans"},
+              "fontSize": {"value": 13},
+              "fontWeight": {"value": 700},
+              "x": {"scale": "x", "field": "Year"},
+              "y": {"scale": "y", "field": "label y"},
+              "fill": {"value": "#171715"},
+              "opacity": {"signal": "datum['key'] === 'Free' ? 1 : 0"}
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "slaves_text",
+      "type": "text",
+      "encode": {
+        "update": {
+          "text": {
+            "signal": "['SLAVES', 'ESCLAVES']"
+          },
+          "baseline": {"value": "bottom"},
+          "align": {"value": "center"},
+          "dy": {"value": -0.5},
+          "font": {"value": "Sans-Serif"},
+          "fontSize": {"value": 18},
+          "fontWeight": {"value": 500},
+          "x": {"signal": "width/2"},
+          "y": {"scale": "y", "value": "0.45"},
+          "fill": {"value": "#EEEEEE"}
+        }
+      }
+    },
+    {
+      "type": "group",
+      "name": "footer_group",
+      "description": "The group of marks located at the bottom of the canvas that provide additional information about the visual",
+      "marks": [
+        {
+          "name": "footer_prefix_text",
+          "description": "The labels for each footer item",
+          "type": "text",
+          "from": {"data": "footer"},
+          "interactive": false,
+          "encode": {
+            "update": {
+              "opacity": {"value": 1},
+              "fill": {"signal": "'#888'"},
+              "font": {"signal": "font"},
+              "fontWeight": {"value": 100},
+              "fontSize": {"value": 10},
+              "baseline": {"value": "middle"},
+              "x": {"signal": "0"},
+              "y": {"signal": "scale('yScaleFooter', datum['id'])"},
+              "text": {"signal": "datum['text'][0]"}
+            }
+          }
+        },
+        {
+          "name": "footer_href_text",
+          "description": "The hyperlinks for each footer item",
+          "type": "text",
+          "from": {"data": "footer"},
+          "interactive": true,
+          "encode": {
+            "update": {
+              "opacity": {"value": 0.65},
+              "fill": {"signal": "'#333'"},
+              "font": {"signal": "font"},
+              "fontWeight": {"value": 600},
+              "fontSize": {"value": 10},
+              "baseline": {"value": "middle"},
+              "x": {
+                "signal": "data('footer_prefix_text')[0]['bounds']['x2']+5"
+              },
+              "y": {"signal": "scale('yScaleFooter', datum['id'])"},
+              "text": {"signal": "datum['text'][1]"},
+              "href": {"field": "href"},
+              "cursor": {"value": "pointer"},
+              "tooltip": {"field": "href"}
+            },
+            "hover": {"opacity": {"value": 1}}
+          }
+        }
+      ]
+    }
+  ],
+  "axes": [
+    {
+      "scale": "x",
+      "orient": "top",
+      "tickCount": {"signal": "length(data('dataset'))"},
+      "offset": {"signal": "-(backgroundImageXY[1]+150)"},
+      "zindex": 99,
+      "format": ".0f",
+      "labelFontSize": 16,
+      "labelFontWeight": "600",
+      "labelFont": "Gill Sans",
+      "domain": false,
+      "ticks": false,
+      "grid": true,
+      "gridScale": "y",
+      "gridColor": "#171715",
+      "gridOpacity": 1,
+      "gridWidth": 0.25,
+      "title": "FREE - LIBRE",
+      "titlePadding": -45,
+      "titleFont": "Sans-Serif",
+      "titleFontSize": 17,
+      "titleFontWeight": 700
+    }
+  ],
+  "scales": [
+    {
+      "name": "x",
+      "type": "linear",
+      "domain": {"data": "dataset", "field": "Year", "sort": true},
+      "domainMin": {"signal": "extent(pluck(data('dataset'), 'Year'))[0]"},
+      "domainMax": {"signal": "extent(pluck(data('dataset'), 'Year'))[1]"},
+      "range": [{"signal": "0"}, {"signal": "width"}]
+    },
+    {
+      "name": "y",
+      "type": "linear",
+      "domain": [0, 1],
+      "range": [{"signal": "backgroundImageXY[1]+150"}, {"signal": "height-15"}]
+    },
+    {
+      "name": "color",
+      "type": "ordinal",
+      "domain": ["Slave", "Free"],
+      "range": ["#171715", "#408C61"]
+    },
+    {
+      "name": "yScaleFooter",
+      "type": "band",
+      "domain": {"data": "footer", "field": "id"},
+      "range": [
+        {"signal": "height+20"},
+        {"signal": "height+30+length(data('footer'))*11"}
+      ]
+    }
+  ],
+  "data": [
+    {
+      "name": "dataset",
+      "url": "https://raw.githubusercontent.com/Giammaria/Du-Bois-DVS-challenge/main/2024/challenge-09/data/data.csv",
+      "format": {"type": "csv", "parse": "auto"}
+    },
+    {
+      "name": "dataset_stack",
+      "source": "dataset",
+      "transform": [
+        {"type": "fold", "fields": ["Slave", "Free"]},
+        {"type": "formula", "expr": "datum['value']/100", "as": "value"},
+        {
+          "type": "stack",
+          "field": "value",
+          "offset": "normalize",
+          "sort": {"field": "key", "order": "ascending"},
+          "groupby": ["Year"]
+        },
+        {
+          "type": "window",
+          "ops": ["lag"],
+          "fields": ["y1"],
+          "groupby": ["key"],
+          "as": ["label y"]
+        },
+        {
+          "type": "formula",
+          "expr": "datum['Year'] === domain('x')[1] ? datum['label y'] : datum['y1']",
+          "as": "label y"
+        }
+      ]
+    },
+    {
+      "name": "footer",
+      "values": [
+        {
+          "id": 1,
+          "text": [
+            "Data Source:",
+            "github.com/ajstarks/dubois-data-portraits/"
+          ],
+          "href": "https://github.com/ajstarks/dubois-data-portraits/tree/master/challenge/2024/challenge08"
+        },
+        {
+          "id": 2,
+          "text": [
+            "Original:",
+            "Proportion of Freemen and Slaves Among American Negroes"
+          ],
+          "href": "https://github.com/ajstarks/dubois-data-portraits/blob/master/challenge/2024/challenge09/original-plate-51.jpg"
+        },
+        {
+          "id": 4,
+          "text": ["Challenge:", "2024 Du Bois Visualization Challenge"],
+          "href": "https://www.datavisualizationsociety.org/news/2024/2/2/advance-your-data-viz-skills-with-the-weekly-2024-du-bois-visualization-challenge"
+        },
+        {
+          "id": 5,
+          "text": ["Emulated By:", "Madison Giammaria"],
+          "href": "https://www.linkedin.com/in/madison-giammaria-58463b33"
+        }
+      ]
+    }
+  ],
+  "config": {
+    "title": {
+      "orient": "top",
+      "anchor": "middle",
+      "font": {"value": "sans-serif"},
+      "fontSize": 11,
+      "lineHeight": 25,
+      "offset": -90,
+      "fontWeight": 600,
+      "color": "#000",
+      "zindex": 99,
+      "subtitleFont": {"value": "sans-serif"},
+      "subtitleFontSize": 9,
+      "subtitleFontWeight": 600,
+      "subtitleColor": "#000",
+      "subtitleLineHeight": 11,
+      "subtitlePadding": 5
+    }
+  }
+}
