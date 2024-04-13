@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega/v5.json",
-  "description": "Entry for challenge 09 in the 2024 DVS Du Bois Visualization Contest.",
+  "description": "Entry for challenge 10 in the 2024 DVS Du Bois Visualization Contest.",
   "usermeta": {
     "developedBy": "Madison Giammaria",
     "LinkedIn": "https://www.linkedin.com/in/madison-giammaria-58463b33",
@@ -8,10 +8,16 @@
   },
   "title": {
     "text": [
-      "PROPORTION OF FREEMAN AND SLAVES AMONG AMERICAN NEGROES .",
-      "PROPORTION DES NÈGRES LIBRES ET DES ESCLAVES EN AMÉRIQUE ."
+      "‎ ‎ ‎ ‎ A SERIES OF STATISTICAL CHARTS,ILLUSTRA -",
+      "TING THE CONDITION OF THE DESCENDANTS OF FOR-",
+      "MER AFRICAN SLAVES NOW RESIDENT IN THE UNITED",
+      "STATES 0F AMERICA.‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ "
     ],
-    "subtitle": {"signal": "['‎','‎', 'DONE ‎ BY ‎ ATLANTA ‎ UNIVERSITY .']"}
+    "subtitle": [
+      "‎ ‎ ‎ ‎ A SERIE DE CARTES ET DIAGRAMMES STATISTIQUES MONTRANT LA",
+      "CONDITION PRÉSENTE DES DESCENDANTS DES ANCIENS ESCLAVES AFRI-",
+      "CAINS ACTUELLEMENT ÉTABLIS DANS LES ÉTATS UNIS D'AMÉRIQUE.‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ "
+    ]
   },
   "width": 400,
   "padding": 5,
@@ -28,7 +34,7 @@
     },
     {
       "name": "font",
-      "description": "font to be used throught the chart",
+      "description": "font to be used throughout the chart",
       "value": "sans-serif"
     }
   ],
@@ -40,7 +46,7 @@
       "encode": {
         "enter": {
           "url": {
-            "value": "https://raw.githubusercontent.com/Giammaria/Du-Bois-DVS-challenge/main/2024/challenge-09/_artifacts/background.jpg"
+            "value": "https://raw.githubusercontent.com/Giammaria/Du-Bois-DVS-challenge/main/2024/challenge-10/_artifacts/background.jpg"
           },
           "x": {"value": -40},
           "y": {"value": -80},
@@ -50,86 +56,297 @@
       }
     },
     {
-      "name": "background_rect",
-      "type": "rect",
+      "name": "dummybackground_img",
+      "description": "background image to make the visual look like the original plate",
+      "type": "image",
       "encode": {
-        "update": {
-          "x": {"scale": "x", "signal": "domain('x')[0]"},
-          "x2": {"signal": "range('x')[1]"},
-          "y": {"scale": "y", "value": 0},
-          "y2": {"signal": "range('y')[1]"},
-          "fill": {"value": "transparent"},
-          "strokeWidth": {"value": 0.5},
-          "stroke": {"value": "#171715"}
+        "enter": {
+          "url": {
+            "value": "https://raw.githubusercontent.com/Giammaria/Du-Bois-DVS-challenge/main/2024/challenge-10/_artifacts/original-plate-37.jpg"
+          },
+          "x": {"value": -40},
+          "y": {"value": -80},
+          "aspect": {"value": true},
+          "width": {"signal": "width*1.2"},
+          "opacity": {"value": 0}
         }
       }
     },
     {
+      "name": "group_top_labels_text",
       "type": "group",
-      "from": {
-        "facet": {
-          "name": "stack_facet",
-          "data": "dataset_stack",
-          "groupby": "key"
-        }
-      },
+      "encode": {"enter": {"y": {"value": 60}}},
       "marks": [
         {
-          "name": "area_marks",
-          "type": "area",
-          "from": {"data": "stack_facet"},
+          "type": "text",
           "encode": {
-            "update": {
-              "orient": {"value": "vertical"},
-              "interpolate": {"value": "monotone"},
-              "x": {"scale": "x", "field": "Year"},
-              "y": {"scale": "y", "field": "y0"},
-              "y2": {"scale": "y", "field": "y1"},
-              "fill": {"scale": "color", "field": "key"}
+            "enter": {
+              "dx": {"value": 60},
+              "font": {"value": "sans-serif"},
+              "fontSize": {"value": 8.75},
+              "text": {
+                "value": [
+                  "PREPARED AND EXECUTED BY",
+                  " ‎ NEGRO STUDENTS UNDER THE",
+                  "DIRECTION OF",
+                  "ATLANTA UNIVERSITY.",
+                  "ATLANTA,GA.",
+                  "UNITED STATES OF AMERICA."
+                ]
+              },
+              "baseline": {"value": "top"},
+              "lineHeight": {"value": 12},
+              "align": {"value": "center"},
+              "fill": {"value": "#666"}
             }
           }
         },
         {
-          "name": "percentage_text",
           "type": "text",
-          "from": {"data": "stack_facet"},
           "encode": {
-            "update": {
+            "enter": {
+              "dx": {"value": 335},
+              "font": {"value": "sans-serif"},
+              "fontSize": {"value": 8.75},
               "text": {
-                "signal": "replace(format(datum['value'], '.1%'), '.0', '')"
+                "value": [
+                  "PRÉPARÉES ET EXÉCUTÉES PAR",
+                  "DES ÉTUDIANTS NÈGRES SOUS ‎ ‎",
+                  "LA DIRECTION DE L'UNIVERSITÉ ‎  ‎ ",
+                  "D'ATLANTA.",
+                  "ÉTAT DE GÉORGIE",
+                  "ÉTATS UNIS D'AMÉRIQUE."
+                ]
               },
-              "baseline": {"value": "bottom"},
+              "baseline": {"value": "top"},
+              "lineHeight": {"value": 12},
               "align": {"value": "center"},
-              "dy": {"value": -0.5},
-              "font": {"value": "Gill Sans"},
-              "fontSize": {"value": 13},
-              "fontWeight": {"value": 700},
-              "x": {"scale": "x", "field": "Year"},
-              "y": {"scale": "y", "field": "label y"},
-              "fill": {"value": "#171715"},
-              "opacity": {"signal": "datum['key'] === 'Free' ? 1 : 0"}
+              "fill": {"value": "#DAB5AC"}
+            }
+          }
+        },
+        {
+          "type": "rect",
+          "encode": {
+            "enter": {
+              "x": {"value": 151.5},
+              "width": {"value": 11},
+              "y": {"value": 64.5},
+              "height": {"value": 14},
+              "fill": {"value": "#000"}
+            }
+          }
+        },
+        {
+          "type": "symbol",
+          "encode": {
+            "enter": {
+              "shape": {"value": "circle"},
+              "x": {"value": 157},
+              "y": {"value": 67.5},
+              "size": {"value": 25},
+              "fill": {"value": "#fff"}
+            }
+          }
+        },
+        {
+          "type": "symbol",
+          "encode": {
+            "enter": {
+              "shape": {
+                "value": "M0,.5L.6,.8L.5,.1L1,-.3L.3,-.4L0,-1L-.3,-.4L-1,-.3L-.5,.1L-.6,.8L0,.5Z"
+              },
+              "x": {"value": 157},
+              "y": {"value": 75},
+              "size": {"value": 25},
+              "fill": {"value": "#fff"}
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "enter": {
+              "dx": {"value": 170},
+              "dy": {"value": 65.5},
+              "font": {"value": "sans-serif"},
+              "fontSize": {"value": 5},
+              "text": {
+                "value": ["CENTRE OF NÈGRO POPULATION.", "ATLANTA UNIVERSITY."]
+              },
+              "baseline": {"value": "top"},
+              "lineHeight": {"value": 9.5},
+              "align": {"value": "left"},
+              "fill": {"value": "#666"}
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "enter": {
+              "x": {"signal": "width/2"},
+              "dy": {"value": 82.5},
+              "font": {"value": "sans-serif"},
+              "fontSize": {"value": 8.75},
+              "text": {
+                "value": [
+                  "THE UNIVERSITY WAS FUNDED IN 1867. IT HAS INSTRUCTED 6000 NEGROE STUDENTS.",
+                  "‎",
+                  "IT HAS GRADUATED 330 NEGROES AMONG WHOM ARE:"
+                ]
+              },
+              "baseline": {"value": "top"},
+              "lineHeight": {"value": 9.5},
+              "align": {"value": "center"},
+              "fill": {"value": "#666"}
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "enter": {
+              "x": {"signal": "width/2"},
+              "dy": {"value": 92},
+              "font": {"value": "sans-serif"},
+              "fontSize": {"value": 8.75},
+              "text": {
+                "value": [
+                  "L'UNIVERSITÉ A ÉTÉ FONDÉE EN 1867.ELLE A DONNÉ L'INSTRUCTION À 6000 ÉTUDIANTS NÈGRES.",
+                  "‎",
+                  "ELLE A DÉLIVRÉ DES DIPLÔMES À 330 NÈGRES DONT :"
+                ]
+              },
+              "baseline": {"value": "top"},
+              "lineHeight": {"value": 9.5},
+              "align": {"value": "center"},
+              "fill": {"value": "#DAB5AC"}
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "enter": {
+              "x": {"signal": "width/2"},
+              "dy": {"value": 300},
+              "font": {"value": "sans-serif"},
+              "fontSize": {"value": 8.1},
+              "text": {
+                "value": [
+                  "THE UNIVERSITY HAS 20 PROFESSORS AND INSTRUCTORS AND 250 STUDENTS AT PRESENT.‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎",
+                  "IT HAS FIVE BUILDINGS,60 ACRES OF CAMPUS,AND A LIBRARY OF 11,000 VOLUMES.IT AIMS TO RAISE",
+                  "AND CIVILIZE THE SONGS OF THE FREEDMEN BY TRAINING THEIR MORE CAPABLE MEMBERS IN THE LIBER-",
+                  "AL ARTS ACCORDING TO THE BEST STANDARDS OF THE DAY.‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ",
+                  "THE PROPER ACCOMPLISHMENT OF THIS WORK DEMANDS AN ENDOWMENT FUND OF $500,000."
+                ]
+              },
+              "baseline": {"value": "top"},
+              "lineHeight": {"value": 9.5},
+              "align": {"value": "center"},
+              "fill": {"value": "#999"}
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "enter": {
+              "x": {"signal": "width/2"},
+              "dy": {"value": 351.5},
+              "font": {"value": "sans-serif"},
+              "fontSize": {"value": 8.1},
+              "text": {
+                "value": [
+                  "L'UNIVERSITÉ A ACTUELLEMENT 20 PROFESSEURS ET INSTRUCTEURS ET 250 ÉTUDIANTS. ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎",
+                  "ELLE EST COMPOSÉE DE CINQ BÂTIMENTS, 60 ACRES (ENVIRON 26 HECTARES) DE TERRAIN SERVANT DE",
+                  "COUR ET DE CHAMP DE RÉCRÉATION, ET D'UNE BIBLIOTHÈQUE CONTENANT 11,000 VOLUMES.‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ",
+                  "SON BUT EST D'ÉLEVER ET DE CIVILISER LES FILS DES NÈGRES AFFRANCHIS EN DONNANT AUX MIEUX",
+                  "DOUÉS UNE ÉDUCATION DANS LES ARTS LIBÉRAUX EN ACCORD AVEC LES IDÉES LES PLUS PROGRES ━ ‎ ‎ ‎ ",
+                  "SISTES DE L'ÉPOQUE.‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎",
+                  "L'ACCOMPLISSMENT DE CETTE OEUVRE DEMANDE UNE DOTATION DE $500,000 (2,500,000 FRANCS). ‎ ‎ ‎ ‎ ‎ ‎"
+                ]
+              },
+              "baseline": {"value": "top"},
+              "lineHeight": {"value": 9.5},
+              "align": {"value": "center"},
+              "fill": {"value": "#999"}
             }
           }
         }
       ]
     },
     {
-      "name": "slaves_text",
-      "type": "text",
+      "type": "shape",
+      "from": {"data": "map"},
       "encode": {
-        "update": {
-          "text": {
-            "signal": "['SLAVES', 'ESCLAVES']"
+        "update": { 
+            "stroke": {"value": "#666"},
+          "fill": {"field": "hex"} }
+      },
+      "transform": [
+        { "type": "geoshape", "projection": "projection" }
+      ]
+    },
+     {
+          "type": "symbol",
+          "encode": {
+            "enter": {
+              "shape": {
+                "value": "M0,.5L.6,.8L.5,.1L1,-.3L.3,-.4L0,-1L-.3,-.4L-1,-.3L-.5,.1L-.6,.8L0,.5Z"
+              },
+              "x": {"value": 221.5},
+              "y": {"value": 107.5},
+              "size": {"value": 25},
+              "fill": {"value": "#fff"}
+            }
+          }
+        },
+    {
+      "type": "arc",
+      "from": {"data": "pie"},
+      "encode": {
+        "enter": {
+          "fill": {"scale": "color", "field": "Occupation"},
+          "x": {"signal": "width / 2+1"},
+          "y": {"signal": "height / 2+11"},
+          "startAngle": {"field": "startAngle"},
+          "endAngle": {"field": "endAngle"},
+          "innerRadius": {"signal": "0"},
+          "outerRadius": {"signal": "width / 4.575"},
+          "stroke": {"value": "#999"},
+          "strokeWidth": {"value": 0.25}
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {"data": "pie"},
+      "interactive": false,
+      "encode": {
+        "enter": {
+          "text": {"signal": "format(datum['Percentage'], '.1%')"},
+          "fill": {"value": "#333"},
+          "stroke": {"value": "#333"},
+          "strokeWidth": {
+            "signal": "datum['Occupation'] === 'TEACHERS' || datum['Occupation'] === 'HOUSE WIVES' ? 0.75 : 0.25"
           },
-          "baseline": {"value": "bottom"},
+          "radius": {
+            "signal": "datum['Occupation'] === 'HOUSE WIVES' ? width/8.5 : width/4.9"
+          },
+          "theta": {
+            "signal": "datum['startAngle']+(datum['endAngle']-datum['startAngle'])/2"
+          },
           "align": {"value": "center"},
-          "dy": {"value": -0.5},
-          "font": {"value": "Sans-Serif"},
-          "fontSize": {"value": 18},
-          "fontWeight": {"value": 500},
-          "x": {"signal": "width/2"},
-          "y": {"scale": "y", "value": "0.45"},
-          "fill": {"value": "#EEEEEE"}
+          "fontSize": {
+            "signal": "datum['Occupation'] === 'TEACHERS' || datum['Occupation'] === 'HOUSE WIVES' ? 10 : 6.5"
+          },
+          "x": {"signal": "width / 2+1"},
+          "y": {"signal": "height / 2+11"},
+          "dx": {"signal": "datum['Occupation'] === 'TEACHERS' ? -15 : 0"},
+          "dy": {"signal": "datum['Occupation'] === 'TEACHERS' ? 52.5 : 0"},
+          "fontWeight": {"value": "900"}
         }
       }
     },
@@ -187,51 +404,73 @@
       ]
     }
   ],
-  "axes": [
+  "projections": [
     {
-      "scale": "x",
-      "orient": "top",
-      "tickCount": {"signal": "length(data('dataset'))"},
-      "offset": {"signal": "-(backgroundImageXY[1]+150)"},
-      "zindex": 99,
-      "format": ".0f",
-      "labelFontSize": 16,
-      "labelFontWeight": "600",
-      "labelFont": "Gill Sans",
-      "domain": false,
-      "ticks": false,
-      "grid": true,
-      "gridScale": "y",
-      "gridColor": "#171715",
-      "gridOpacity": 1,
-      "gridWidth": 0.25,
-      "title": "FREE - LIBRE",
-      "titlePadding": -45,
-      "titleFont": "Sans-Serif",
-      "titleFontSize": 17,
-      "titleFontWeight": 700
+      "name": "projection",
+      "type": "mercator",
+      "fit": {"signal": "data('map')"},
+      "scale": 95,
+      "translate": [360,165]
+    }
+  ],
+  "legends": [
+    {
+      "fill": "color",
+      "direction": "vertical",
+      "padding": 0,
+      "legendX": -10,
+      "legendY": 215,
+      "rowPadding": -25,
+      "orient": "none",
+      "labelFont": {"value": "sans-serif"},
+      "labelFontSize": {"value": 5.5},
+      "labelColor": {"value": "#666"},
+      "encode": {
+        "symbols": {
+          "enter": {
+            "strokeWidth": {"value": 0.75},
+            "stroke": {"value": "#777"},
+            "size": {"value": 200}
+          }
+        }
+      }
+    },
+    {
+      "fill": "colorFrench",
+      "direction": "vertical",
+      "padding": 0,
+      "legendX": {"signal": "width-2.5"},
+      "legendY": 215,
+      "labelAlign": "right",
+      "labelOffset": -20,
+      "rowPadding": -25,
+      "orient": "none",
+      "labelFont": {"value": "sans-serif"},
+      "labelFontSize": {"value": 5.5},
+      "labelColor": {"value": "#D72042"},
+      "encode": {
+        "symbols": {
+          "enter": {
+            "strokeWidth": {"value": 0.75},
+            "stroke": {"value": "#777"},
+            "size": {"value": 200}
+          }
+        }
+      }
     }
   ],
   "scales": [
     {
-      "name": "x",
-      "type": "linear",
-      "domain": {"data": "dataset", "field": "Year", "sort": true},
-      "domainMin": {"signal": "extent(pluck(data('dataset'), 'Year'))[0]"},
-      "domainMax": {"signal": "extent(pluck(data('dataset'), 'Year'))[1]"},
-      "range": [{"signal": "0"}, {"signal": "width"}]
-    },
-    {
-      "name": "y",
-      "type": "linear",
-      "domain": [0, 1],
-      "range": [{"signal": "backgroundImageXY[1]+150"}, {"signal": "height-15"}]
-    },
-    {
       "name": "color",
       "type": "ordinal",
-      "domain": ["Slave", "Free"],
-      "range": ["#171715", "#408C61"]
+      "domain": {"data": "dataset_updated", "field": "Occupation"},
+      "range": {"data": "dataset_updated", "field": "hex"}
+    },
+    {
+      "name": "colorFrench",
+      "type": "ordinal",
+      "domain": {"data": "dataset_updated", "field": "French Occupation"},
+      "range": {"data": "dataset_updated", "field": "hex"}
     },
     {
       "name": "yScaleFooter",
@@ -246,33 +485,100 @@
   "data": [
     {
       "name": "dataset",
-      "url": "https://raw.githubusercontent.com/Giammaria/Du-Bois-DVS-challenge/main/2024/challenge-09/data/data.csv",
+      "url": "https://raw.githubusercontent.com/Giammaria/Du-Bois-DVS-challenge/main/2024/challenge-10/data/data-original.csv",
       "format": {"type": "csv", "parse": "auto"}
     },
     {
-      "name": "dataset_stack",
+      "name": "dataset_updated",
       "source": "dataset",
       "transform": [
-        {"type": "fold", "fields": ["Slave", "Free"]},
-        {"type": "formula", "expr": "datum['value']/100", "as": "value"},
         {
-          "type": "stack",
-          "field": "value",
-          "offset": "normalize",
-          "sort": {"field": "key", "order": "ascending"},
-          "groupby": ["Year"]
-        },
-        {
-          "type": "window",
-          "ops": ["lag"],
-          "fields": ["y1"],
-          "groupby": ["key"],
-          "as": ["label y"]
+          "type": "formula",
+          "expr": "indexof(['Teachers', 'Ministers', 'Business', 'Government Service', 'Other Professions', 'House Wives'], datum['Occupation'])",
+          "as": "index"
         },
         {
           "type": "formula",
-          "expr": "datum['Year'] === domain('x')[1] ? datum['label y'] : datum['y1']",
-          "as": "label y"
+          "expr": "['red','blue','pink','tan','green','yellow'][indexof(['Teachers', 'Ministers', 'Government Service', 'Business', 'Other Professions', 'House Wives'], datum['Occupation'])]",
+          "as": "color"
+        },
+        {
+          "type": "formula",
+          "expr": "['#D72042','#ABACB7','#DEC1B4','#D5BDAA','#99907E','#E8B45A'][indexof(['Teachers', 'Ministers', 'Government Service', 'Business', 'Other Professions', 'House Wives'], datum['Occupation'])]",
+          "as": "hex"
+        },
+        {
+          "type": "formula",
+          "expr": "['PROFESSEURS ET INSTITUTEURS', 'MINISTRES DE L\\'ÉVANGILE', 'EMPLOYÉS DU GOUVERNEMENT', 'MARCHANDS', 'MÉDECINS, AVOCATS, ET ÉTUDIANTS', 'MÈRES DE FAMILLE'][indexof(['Teachers', 'Ministers', 'Government Service', 'Business', 'Other Professions', 'House Wives'], datum['Occupation'])]",
+          "as": "French Occupation"
+        },
+        {
+          "type": "formula",
+          "expr": "upper(datum['Occupation'])",
+          "as": "Occupation"
+        },
+        {
+          "type": "formula",
+          "expr": "datum['Percentage']/100",
+          "as": "Percentage"
+        }
+      ]
+    },
+    {
+      "name": "pie",
+      "source": "dataset_updated",
+      "transform": [
+        {"type": "collect", "sort": {"field": "index"}},
+        {
+          "type": "pie",
+          "field": "Percentage",
+          "startAngle": {"signal": "-PI/2"},
+          "endAngle": {"signal": "1.5*PI"},
+          "sort": false
+        }
+      ]
+    },
+    {
+      "name": "state_colors",
+      "url": "https://raw.githubusercontent.com/Giammaria/Du-Bois-DVS-challenge/main/2024/challenge-10/data/state-occupations.json",
+      "transform": [
+        {
+          "type": "formula",
+          "expr": "scale('color', datum['Occupation'])",
+          "as": "hex"
+        },
+        {
+          "type": "formula",
+          "expr": "datum['State'] === 'Georgia' ? '#000000' : datum['hex']",
+          "as": "hex"
+        },
+        {
+          "type": "formula",
+          "expr": "datum['State'] === 'Louisiana' ? '#B79786' : datum['hex']",
+          "as": "hex"
+        }
+      ]
+    },
+    {
+      "name": "map",
+      "format": {"type": "topojson", "feature": "map"},
+      "url": "https://raw.githubusercontent.com/Giammaria/Du-Bois-DVS-challenge/main/2024/challenge-10/data/map.json",
+      "transform": [
+        {
+          "type": "formula",
+          "expr": "datum['properties']['NAME']",
+          "as": "State"
+        },
+        {
+          "type": "lookup",
+          "from": "state_colors",
+          "key": "State",
+          "fields": ["State"],
+          "values": ["Occupation", "hex"]
+        },
+        {
+          "type": "filter",
+          "expr": "datum['State'] !== 'Alaska' && datum['State'] !== 'Hawaii' && datum['State'] !== 'Puerto Rico'"
         }
       ]
     },
@@ -285,15 +591,15 @@
             "Data Source:",
             "github.com/ajstarks/dubois-data-portraits/"
           ],
-          "href": "https://github.com/ajstarks/dubois-data-portraits/tree/master/challenge/2024/challenge08"
+          "href": "https://github.com/ajstarks/dubois-data-portraits/tree/master/challenge/2024/challenge10"
         },
         {
           "id": 2,
           "text": [
             "Original:",
-            "Proportion of Freemen and Slaves Among American Negroes"
+            "The Condition of the Descendants of Former African Slaves"
           ],
-          "href": "https://github.com/ajstarks/dubois-data-portraits/blob/master/challenge/2024/challenge09/original-plate-51.jpg"
+          "href": "https://github.com/ajstarks/dubois-data-portraits/blob/master/challenge/2024/challenge10/original-plate-37.jpg"
         },
         {
           "id": 4,
@@ -313,18 +619,16 @@
       "orient": "top",
       "anchor": "middle",
       "font": {"value": "sans-serif"},
-      "fontSize": 11,
-      "lineHeight": 25,
-      "offset": -90,
+      "fontSize": 16,
+      "lineHeight": 16,
+      "offset": -132.5,
       "fontWeight": 600,
       "color": "#000",
       "zindex": 99,
-      "subtitleFont": {"value": "sans-serif"},
-      "subtitleFontSize": 9,
-      "subtitleFontWeight": 600,
-      "subtitleColor": "#000",
-      "subtitleLineHeight": 11,
-      "subtitlePadding": 5
+      "subtitleFontSize": 11.75,
+      "subtitleFontWeight": 100,
+      "subtitleFont": "sans-serif",
+      "subtitleColor": "#DAB5AC"
     }
   }
 }

@@ -6,6 +6,14 @@
 This repository contains my participation in [the Du Bois Data Visualization Society Challenge](https://www.datavisualizationsociety.org/news/2024/2/2/advance-your-data-viz-skills-with-the-weekly-2024-du-bois-visualization-challenge). The goal of the challenge is to celebrate the data viz legacy of [W.E.B Du Bois](https://en.wikipedia.org/wiki/W._E._B._Du_Bois)—a Black American civil rights activist, sociologist and writer—by recreating the visualizations from the 1900 Paris Exposition using modern tools. 
 Visit [Github](https://github.com/ajstarks/dubois-data-portraits/blob/master/challenge/2024/README.md) for full details of each week’s challenge, including the 1900 original plates and the corresponding dataset.
 
+## 2024 Challenge 10
+![](2024/challenge-10/_artifacts/screenshot.png)<br>
+Tool used: [Vega](https://vega.github.io/vega/docs/)
+
+- [See the interactive version in the Vega Editor](https://vega.github.io/editor/#/gist/3a4bd21d0923ef0a80605e4faa1787bb/spec.json/view)
+- [See the original.](2024/challenge-10/_artifacts/original-plate-37.jpg)
+- [See the Vega specification.](2024/challenge-10/visualization.vg.json)
+
 ## 2024 Challenge 09
 ![](2024/challenge-09/_artifacts/screenshot.png)<br>
 Tool used: [Vega](https://vega.github.io/vega/docs/)
